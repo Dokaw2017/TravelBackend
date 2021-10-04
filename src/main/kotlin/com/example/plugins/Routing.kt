@@ -1,5 +1,6 @@
 package com.example.plugins
 
+import com.example.route.createUser
 import io.ktor.routing.*
 import io.ktor.http.*
 import io.ktor.content.*
@@ -12,12 +13,6 @@ fun Application.configureRouting() {
     
 
     routing {
-        get("/") {
-                call.respondText("Hello Zak!")
-            }
-        // Static plugin. Try to access `/static/index.html`
-        static("/static") {
-            resources("static")
-        }
+        createUser()
     }
 }
