@@ -1,9 +1,12 @@
 package com.example.di
 
 import com.example.Utils.Constants.DATABASE_NAME
-import com.example.repository.UserRepository
-import com.example.repository.UserRepositoryImp
-import org.koin.core.module.Module
+import com.example.data.repository.sportplan.SportPlanRepository
+import com.example.data.repository.sportplan.SportPlanRepositoryImpl
+import com.example.data.repository.user.UserRepository
+import com.example.data.repository.user.UserRepositoryImp
+import com.example.service.SportPlanService
+import com.example.service.UserService
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import org.koin.dsl.module
@@ -17,4 +20,10 @@ val mainModule = module() {
     single<UserRepository>{
         UserRepositoryImp(get())
     }
+    single<SportPlanRepository>{
+        SportPlanRepositoryImpl(get())
+    }
+
+    single { UserService(get()) }
+    single { SportPlanService(get()) }
 }

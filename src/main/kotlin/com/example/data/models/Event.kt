@@ -5,8 +5,9 @@ import org.bson.types.ObjectId
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
 
-data class EventPlan @OptIn(ExperimentalTime::class) constructor(
-    val location:String,
+data class Event @OptIn(ExperimentalTime::class) constructor(
+    val name:String,
+    val place:String,
     val duration: Duration,
     val timestamp:Long,
     val participants:Int,

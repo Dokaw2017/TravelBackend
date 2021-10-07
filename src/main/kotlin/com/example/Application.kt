@@ -13,10 +13,10 @@ fun Application.module() {
     install(Koin){
         modules(mainModule)
     }
+    configureSecurity()
     configureRouting()
     configureSockets()
     configureSerialization()
     configureMonitoring()
     configureHTTP()
-    configureSecurity()
 }
