@@ -112,7 +112,7 @@ fun Routing.loginUser(
 }*/
 fun Route.general(){
     get ("/"){
-        call.respond("Hello world")
+        call.respond("Hello Zak, I am running as you can tell!")
     }
 }
 fun Route.updateUserProfile(
