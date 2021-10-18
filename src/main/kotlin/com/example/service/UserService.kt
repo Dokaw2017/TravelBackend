@@ -4,6 +4,7 @@ import com.example.UpdateProfileRequest
 import com.example.data.models.User
 import com.example.data.repository.user.UserRepository
 import com.example.data.request.RegistrationRequest
+import com.example.data.response.ProfileResponse
 import java.util.*
 
 class UserService(
@@ -28,6 +29,10 @@ class UserService(
                 inviteId = listOf("","",""),
                 friendsId = "",
                 chatGroupId = listOf("","",""),
+                bio = "",
+                followerCount = 5,
+                followingCount = 2,
+                postCount = 7
             )
         )
     }
@@ -40,6 +45,19 @@ class UserService(
         return enteredPassword == actualPassword
     }
 
+   /* suspend fun getUserProfile(userId: String):ProfileResponse{
+        val user = userRepository.getUserById(userId)
+        val profile =  ProfileResponse(
+            username = username,
+            bio = bio,
+            followingCount = followerCount,
+            followingCount = followingCount,
+            postCount = postCount,
+            profilePictureUrl = profileImageUrl,
+
+            )
+    }
+*/
     suspend fun getUserById(userId: String):User?{
             return userRepository.getUserById(userId)
     }

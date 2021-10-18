@@ -31,14 +31,14 @@ fun Route.createSPlan(
 
 
             if (request.name.isBlank() || request.place.isBlank()) {
-                call.respond(ApiResponse(false, ApiMessages.FIELD_BLANK))
+                call.respond(ApiResponse<Unit>(false, ApiMessages.FIELD_BLANK))
                 return@post
             }
 
             sportPlanService.createSportPlan(request, call.userId)
 
             call.respond(
-                ApiResponse(true, "successfully saved")
+                ApiResponse<Unit>(true, "successfully saved")
             )
         }
     }
@@ -47,15 +47,15 @@ fun Route.createSPlan(
 fun Routing.getSPlans(
     sportPlanService: SportPlanService,
 ){
-    authenticate {
 
-        get("/api/post/get") {
+authenticate {
+    get("/api/post/get") {
 
-           val posts = sportPlanService.getSPlans(call.userId)
-            call.respond(
-              HttpStatusCode.OK,
-                posts
-            )
-        }
+        val posts = sportPlanService.getSPlans(call.userId)
+        call.respond(
+            HttpStatusCode.OK,
+            posts
+        )
     }
+}
 }

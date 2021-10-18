@@ -47,6 +47,10 @@ class UserRepositoryImp(
                 buddyId = listOf("","",""),
                 inviteId = listOf("","",""),
                 friendsId = "",
+                bio = "",
+                followerCount = 7,
+                followingCount = 4,
+                postCount = 5,
                 chatGroupId = listOf("","",""),
                 id = userId
             )

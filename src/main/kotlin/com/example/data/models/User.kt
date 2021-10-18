@@ -1,5 +1,6 @@
 package com.example.data.models
 
+import com.example.data.response.ProfileResponse
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
 import java.util.*
@@ -15,6 +16,10 @@ data class User(
     val location:List<String>,
     val hobbies:List<String>,
     val birthDay: Date,
+    val bio:String,
+    val followerCount:Int,
+    val followingCount:Int,
+    val postCount:Int,
     val buddyId:List<String>,
     val inviteId:List<String>,
     val friendsId:String,
@@ -22,4 +27,6 @@ data class User(
     val chatGroupId:List<String>,
     @BsonId
     val id:String = ObjectId().toString()
-)
+){
+
+}
