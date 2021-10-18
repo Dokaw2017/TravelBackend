@@ -1,1 +1,1 @@
-web: ./build/install/travelserver/bin/travelserver
+web: ./build/install/com.example.travelserver/bin/com.example.travelserver
