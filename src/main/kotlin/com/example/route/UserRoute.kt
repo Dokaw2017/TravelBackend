@@ -110,6 +110,11 @@ fun Routing.loginUser(
     }
 
 }*/
+fun Route.general(){
+    get ("/"){
+        call.respond("Hello world")
+    }
+}
 fun Route.updateUserProfile(
     userService: UserService
 ) {
