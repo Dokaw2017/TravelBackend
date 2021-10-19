@@ -1,6 +1,8 @@
 package com.example.di
 
 import com.example.Utils.Constants.DATABASE_NAME
+import com.example.data.repository.follow.FollowRepository
+import com.example.data.repository.follow.FollowRepositoryImpl
 import com.example.data.repository.sportplan.SportPlanRepository
 import com.example.data.repository.sportplan.SportPlanRepositoryImpl
 import com.example.data.repository.user.UserRepository
@@ -19,6 +21,9 @@ val mainModule = module() {
 
     single<UserRepository>{
         UserRepositoryImp(get())
+    }
+    single<FollowRepository>{
+        FollowRepositoryImpl(get())
     }
     single<SportPlanRepository>{
         SportPlanRepositoryImpl(get())

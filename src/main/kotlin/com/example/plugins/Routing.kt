@@ -1,9 +1,7 @@
 package com.example.plugins
 
-import com.example.route.createSPlan
-import com.example.route.createUser
-import com.example.route.getSPlans
-import com.example.route.loginUser
+import com.example.data.repository.follow.FollowRepository
+import com.example.route.*
 import com.example.service.SportPlanService
 import com.example.service.UserService
 import io.ktor.routing.*
@@ -15,6 +13,7 @@ fun Application.configureRouting() {
     
     val userService:UserService by inject()
     val sportPlanService:SportPlanService by inject()
+    val followRepository:FollowRepository by inject()
 
     val jwtIssuer = environment.config.property("jwt.domain").getString()
     val jwtAudience = environment.config.property("jwt.audience").getString()
@@ -28,6 +27,10 @@ fun Application.configureRouting() {
             jwtAudience,
             jwtSecret
         )
+
+        //Following routes
+        followUser(followRepository)
+        unFollowUser(followRepository)
 
         //Plan Routes
         createSPlan(sportPlanService)
