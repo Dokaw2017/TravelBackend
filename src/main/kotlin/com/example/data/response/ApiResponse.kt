@@ -1,6 +1,7 @@
 package com.example.data.response
 
-data class ApiResponse(
+data class ApiResponse<T>(
     val success:Boolean,
-    val message:String? = null
+    val message:String? = null,
+    val data: T? = null
 )

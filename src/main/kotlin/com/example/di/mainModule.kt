@@ -3,12 +3,15 @@ package com.example.di
 import com.example.Utils.Constants.DATABASE_NAME
 import com.example.data.repository.follow.FollowRepository
 import com.example.data.repository.follow.FollowRepositoryImpl
+import com.example.data.repository.like.LikeRepository
+import com.example.data.repository.like.LikeRepositoryImpl
+import com.example.data.repository.post.PostRepository
+import com.example.data.repository.post.PostRepositoryImpl
 import com.example.data.repository.sportplan.SportPlanRepository
 import com.example.data.repository.sportplan.SportPlanRepositoryImpl
 import com.example.data.repository.user.UserRepository
 import com.example.data.repository.user.UserRepositoryImp
-import com.example.service.SportPlanService
-import com.example.service.UserService
+import com.example.service.*
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import org.koin.dsl.module
@@ -22,13 +25,24 @@ val mainModule = module() {
     single<UserRepository>{
         UserRepositoryImp(get())
     }
-    single<FollowRepository>{
-        FollowRepositoryImpl(get())
-    }
     single<SportPlanRepository>{
         SportPlanRepositoryImpl(get())
     }
 
+    single<FollowRepository>{
+        FollowRepositoryImpl(get())
+    }
+
+    single<LikeRepository>{
+        LikeRepositoryImpl(get())
+    }
+
+    single<PostRepository>{
+        PostRepositoryImpl(get())
+    }
     single { UserService(get()) }
     single { SportPlanService(get()) }
+    single { FollowService(get()) }
+    single { PostService(get()) }
+    single { LikeService(get()) }
 }

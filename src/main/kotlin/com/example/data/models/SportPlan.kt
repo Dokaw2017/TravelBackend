@@ -1,12 +1,13 @@
 package com.example.data.models
 
+import kotlinx.serialization.Serializable
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
 import kotlin.time.Duration
 import kotlin.time.ExperimentalTime
-
-data class SportPlan @OptIn(ExperimentalTime::class) constructor(
-    val name:String,
+@Serializable
+data class SportPlan (
+    val title:String,
     val place:String,
     val date:String,
     val userId:String,

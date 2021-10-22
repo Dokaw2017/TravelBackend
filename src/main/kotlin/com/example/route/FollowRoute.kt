@@ -1,61 +1,70 @@
 package com.example.route
 
-import com.example.Utils.ApiMessages.USER_NOT_FOUND
-import com.example.data.repository.follow.FollowRepository
-import com.example.data.request.FollowUpdateRequest
+import com.example.Utils.Constants.USER_NOT_FOUND
+import com.example.data.request.FollowRequest
 import com.example.data.response.ApiResponse
+import com.example.service.FollowService
 import io.ktor.application.*
+import io.ktor.auth.*
 import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
+fun Route.followUser(
+    followService: FollowService,
+    ){
+    authenticate {
+        post ("/api/following/follow"){
+            val request = call.receiveOrNull<FollowRequest>() ?: kotlin.run {
+                call.respond(HttpStatusCode.BadRequest)
+                return@post
+            }
+            val didUserExist = followService.followUserIfExists(request,call.userId)
 
-fun Route.followUser(followRepository: FollowRepository){
-    post ("/api/following/follow"){
-        val request = call.receiveOrNull<FollowUpdateRequest>() ?: kotlin.run {
-            call.respond(HttpStatusCode.BadRequest)
-            return@post
+            if (didUserExist){
+
+                call.respond(
+                    HttpStatusCode.OK, ApiResponse(
+                     true,
+                        "",
+                        ""
+                )
+                )
+            }else{
+                call.respond(
+                    HttpStatusCode.OK,ApiResponse(
+                    false,
+                    USER_NOT_FOUND,
+                        ""
+                ))
+            }
+
         }
-        val didUserExist = followRepository.followUser(
-            request.followingUserId,
-            request.followedUserId
-        )
-
-        if (didUserExist){
-            call.respond(HttpStatusCode.OK, ApiResponse(
-                 true,
-            )
-            )
-        }else{
-            call.respond(HttpStatusCode.OK,ApiResponse(
-                false,
-                message = USER_NOT_FOUND
-            ))
-        }
-
     }
+
 }
 
-fun Route.unFollowUser(followRepository: FollowRepository){
+fun Route.unFollowUser(followService: FollowService){
     delete ("/api/following/unfollow"){
-        val request = call.receiveOrNull<FollowUpdateRequest>() ?: kotlin.run {
+        val request = call.receiveOrNull<FollowRequest>() ?: kotlin.run {
             call.respond(HttpStatusCode.BadRequest)
             return@delete
         }
-        val didUserExist = followRepository.unFollowUser(
-            request.followingUserId,
-            request.followedUserId
-        )
-
+        val didUserExist = followService.unFollowUserIfExists(request,call.userId)
         if (didUserExist){
-            call.respond(HttpStatusCode.OK,ApiResponse(
-                true
+            call.respond(
+                HttpStatusCode.OK,ApiResponse(
+                true,
+                    "",
+                    ""
             ))
         }else{
-            call.respond(HttpStatusCode.OK,ApiResponse(
+            call.respond(
+                HttpStatusCode.OK,ApiResponse(
                 false,
-                message = USER_NOT_FOUND
+                USER_NOT_FOUND,
+                    ""
             ))
         }
     }

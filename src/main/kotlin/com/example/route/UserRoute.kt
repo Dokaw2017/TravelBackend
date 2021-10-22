@@ -25,7 +25,7 @@ import org.koin.ktor.ext.inject
 import java.io.File
 import java.util.*
 
-fun Route.createUser(
+/*fun Route.createUser(
     userService: UserService
 ){
 
@@ -38,18 +38,18 @@ fun Route.createUser(
 
         val userExists = userService.getUserById(request.email) != null
         if (userExists) {
-            call.respond(ApiResponse(false, USER_ALREADY_EXISTS))
+            call.respond(ApiResponse<Unit>(false, USER_ALREADY_EXISTS))
             return@post
         }
         if (request.email.isBlank() || request.username.isBlank() || request.password.isBlank()) {
-            call.respond(ApiResponse(false, FIELD_BLANK))
+            call.respond(ApiResponse<Unit>(false, FIELD_BLANK))
             return@post
         }
 
         userService.createUser(request)
 
         call.respond(
-            ApiResponse(true,"successfully saved")
+            ApiResponse<Unit>(true,"successfully saved")
         )
     }
 }
@@ -74,7 +74,7 @@ fun Routing.loginUser(
         val user = userService.getUserByEmail(request.email) ?: kotlin.run {
             call.respond(
                 HttpStatusCode.OK,
-                ApiResponse(false, INVALID_CREDENTIALS)
+                ApiResponse<Unit>(false, INVALID_CREDENTIALS)
             )
             return@post
         }
@@ -94,19 +94,28 @@ fun Routing.loginUser(
                 .sign(Algorithm.HMAC256(jwtSecret))
             call.respond(
                 HttpStatusCode.OK,
-                AuthResponse(token)
+                ApiResponse(
+                    true,
+                    data = AuthResponse(token)
+                )
+
             )
         } else {
             call.respond(
                 HttpStatusCode.OK,
-                ApiResponse(false, INVALID_CREDENTIALS)
+                ApiResponse<Unit>(false, INVALID_CREDENTIALS)
             )
         }
 
     }
 
+}*/
+fun Route.general(){
+    get ("/"){
+        call.respond("Hello Zak, I am running as you can tell!")
+    }
 }
-/*fun Route.updateUserProfile(
+fun Route.updateUserProfile(
     userService: UserService
 ) {
     val gson: Gson by inject()
@@ -149,7 +158,7 @@ fun Routing.loginUser(
                 )
 
                 if (updateAcknowledged){
-                    call.respond(HttpStatusCode.OK,ApiResponse(true,""))
+                    call.respond(HttpStatusCode.OK,ApiResponse<Unit>(true,""))
                 }else{
                     File("${PROFILE_PICTURE_PATH}/$fileName").delete()
                     call.respond(HttpStatusCode.InternalServerError)
@@ -160,5 +169,5 @@ fun Routing.loginUser(
             }
 
         }
-    }*/
+    }
 

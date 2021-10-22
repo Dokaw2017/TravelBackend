@@ -1,6 +1,6 @@
 package com.example.data.request
 
-data class FollowUpdateRequest(
+data class FollowRequest(
     val followingUserId:String,
     val followedUserId:String,
 )
