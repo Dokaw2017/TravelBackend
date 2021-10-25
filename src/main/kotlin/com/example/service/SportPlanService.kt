@@ -11,7 +11,7 @@ class SportPlanService(
     suspend fun createSportPlan(request:CreateSportPlanRequest,userId:String):Boolean{
         return sportPlanRepository.createSportPlan(
             SportPlan(
-                name = request.name,
+                title = request.name,
                 place = request.place,
                 userId = userId,
                 date = request.date,
