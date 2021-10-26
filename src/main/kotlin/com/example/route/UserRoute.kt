@@ -23,6 +23,7 @@ import org.koin.ktor.ext.inject
 import java.io.File
 import java.util.*
 
+
 fun Route.getPostsForProfile(
     postService: PostService,
 ) {
@@ -69,13 +70,14 @@ fun Route.getUserProfile(userService: UserService) {
             }
             call.respond(
                 HttpStatusCode.OK, profileResponse
-            )
+        )
+
         }
     }
 }
 
-fun Route.general() {
-    get("/") {
+fun Route.general(){
+    get ("/"){
         call.respond("Hello Zak, I am running as you can tell!")
     }
 }
@@ -90,8 +92,8 @@ fun Route.updateUserProfile(
 
             val multipart = call.receiveMultipart()
             var updateProfileRequest: UpdateProfileRequest? = null
-            var profilePictureFilename:String? = null
-            var bannerPictureFilename:String? = null
+            var profilePictureFilename: String? = null
+            var bannerPictureFilename: String? = null
             //var fileName: String? = null
             multipart.forEachPart { partData ->
                 when (partData) {
@@ -105,10 +107,10 @@ fun Route.updateUserProfile(
                         }
                     }
                     is PartData.FileItem -> {
-                        if(partData.name == "profile_picture"){
+                        if (partData.name == "profile_picture") {
 
                             profilePictureFilename = partData.save(PROFILE_PICTURE_PATH)
-                        }else if (partData.name == "banner_image"){
+                        } else if (partData.name == "banner_image") {
                             bannerPictureFilename = partData.save(BANNER_IMAGE_PATH)
                         }
 
@@ -141,15 +143,23 @@ fun Route.updateUserProfile(
 
                 } else {
                     File("${PROFILE_PICTURE_PATH}/$profilePictureFilename").delete()
-                    call.respond(HttpStatusCode.InternalServerError)
+                    if (updateAcknowledged) {
+                        call.respond(HttpStatusCode.OK, ApiResponse<Unit>(true, ""))
+                    } else {
+                        File("${PROFILE_PICTURE_PATH}/$profilePictureFilename").delete()
 
+                        call.respond(HttpStatusCode.InternalServerError)
+
+                    }
+                } ?: kotlin.run {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return@put
                 }
-            } ?: kotlin.run {
-                call.respond(HttpStatusCode.BadRequest)
-                return@put
-            }
 
+            }
         }
+
     }
 }
+
 

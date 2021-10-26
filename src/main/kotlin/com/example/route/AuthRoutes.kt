@@ -17,7 +17,6 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import java.util.*
 
-
 fun Route.createUser(
     userService: UserService
 ){
@@ -106,9 +105,9 @@ fun Routing.loginUser(
 
 }
 
-fun Route.authenticate(){
+fun Route.authenticate() {
     authenticate {
-        get ("/api/user/authenticate"){
+        get("/api/user/authenticate") {
             call.respond(HttpStatusCode.OK)
         }
     }

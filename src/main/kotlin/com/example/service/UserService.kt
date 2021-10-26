@@ -48,6 +48,7 @@ class UserService(
         return enteredPassword == actualPassword
     }
 
+
     suspend fun getUserProfile(userId: String, callerUserId:String):ProfileResponse?{
         val user = userRepository.getUserById(userId) ?: return null
         return ProfileResponse(
@@ -66,6 +67,21 @@ class UserService(
             }
             )
     }
+
+
+   /* suspend fun getUserProfile(userId: String):ProfileResponse{
+        val user = userRepository.getUserById(userId)
+        val profile =  ProfileResponse(
+            username = username,
+            bio = bio,
+            followingCount = followerCount,
+            followingCount = followingCount,
+            postCount = postCount,
+            profilePictureUrl = profileImageUrl,
+
+            )
+    }
+*/
 
     suspend fun getUserById(userId: String):User?{
             return userRepository.getUserById(userId)

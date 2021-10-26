@@ -9,5 +9,5 @@ data class ProfileResponse(
     val followingCount:Int,
     val postCount:Int,
     val isBuddy:Boolean,
-    val isOwnProfile:Boolean,
+    val isOwnProfile:Boolean
 )

@@ -2,10 +2,11 @@ package com.example.plugins
 
 import com.example.route.*
 import com.example.service.*
+import com.example.service.SportPlanService
+import com.example.service.UserService
 import io.ktor.routing.*
 import io.ktor.http.content.*
 import io.ktor.application.*
-import io.ktor.auth.*
 import org.koin.ktor.ext.inject
 
 fun Application.configureRouting() {
