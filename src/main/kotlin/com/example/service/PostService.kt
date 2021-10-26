@@ -27,13 +27,11 @@ class PostService(
         return repository.getPostsByFollows(userId,page,pageSize)
     }
 
-    suspend fun getPost(postId:String):Post? = repository.getPost(postId)
-
     suspend fun deletePost(postId: String){
         repository.deletePost(postId)
     }
 
-   /* suspend fun getPostsForProfile(
+   suspend fun getPostsForProfile(
         userId:String,
         page:Int = 0,
         pageSize:Int = DEFAULT_PAGE_SIZE
@@ -43,7 +41,5 @@ class PostService(
 
     suspend fun getPost(postId:String): Post? = repository.getPost(postId)
 
-    suspend fun deletePost(postId: String){
-        repository.deletePost(postId)
-    }*/
+
 }

@@ -1,7 +1,8 @@
 package com.example.service
 
-import com.example.UpdateProfileRequest
+import com.example.data.request.UpdateProfileRequest
 import com.example.data.models.User
+import com.example.data.repository.follow.FollowRepository
 import com.example.data.repository.user.UserRepository
 import com.example.data.request.RegistrationRequest
 import com.example.data.response.ProfileResponse
@@ -9,6 +10,7 @@ import java.util.*
 
 class UserService(
     private val userRepository: UserRepository,
+    private val followRepository: FollowRepository
 ) {
 
     suspend fun createUser(request: RegistrationRequest){
@@ -22,9 +24,9 @@ class UserService(
                 lastname = "",
                 phoneNumber = 123456789,
                 gender = "",
-                location = listOf("","",""),
+                location = "",
                 hobbies = listOf("","",""),
-                birthDay = Date(),
+                birthDay = "",
                 buddyId = listOf("","",""),
                 inviteId = listOf("","",""),
                 friendsId = "",
@@ -45,19 +47,25 @@ class UserService(
         return enteredPassword == actualPassword
     }
 
-   /* suspend fun getUserProfile(userId: String):ProfileResponse{
-        val user = userRepository.getUserById(userId)
-        val profile =  ProfileResponse(
-            username = username,
-            bio = bio,
-            followingCount = followerCount,
-            followingCount = followingCount,
-            postCount = postCount,
-            profilePictureUrl = profileImageUrl,
-
+    suspend fun getUserProfile(userId: String, callerUserId:String):ProfileResponse?{
+        val user = userRepository.getUserById(userId) ?: return null
+        return ProfileResponse(
+            username = user.username,
+            bio = user.bio,
+            followerCount = user.followerCount,
+            followingCount = user.followingCount,
+            postCount = user.postCount,
+            profilePictureUrl = user.profileImageUrl,
+            hobbies = user.hobbies,
+            isOwnProfile = userId == callerUserId,
+            isBuddy = if (userId != callerUserId){
+                followRepository.doesUserFollow(callerUserId,userId)
+            }else{
+                false
+            }
             )
     }
-*/
+
     suspend fun getUserById(userId: String):User?{
             return userRepository.getUserById(userId)
     }

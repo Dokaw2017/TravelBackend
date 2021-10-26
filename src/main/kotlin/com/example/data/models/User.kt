@@ -1,9 +1,9 @@
 package com.example.data.models
 
-import com.example.data.response.ProfileResponse
+
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
-import java.util.*
+
 
 data class User(
     val firstName:String,
@@ -13,9 +13,9 @@ data class User(
     val password:String,
     val phoneNumber:Long,
     val gender:String,
-    val location:List<String>,
+    val location:String,
     val hobbies:List<String>,
-    val birthDay: Date,
+    val birthDay: String,
     val bio:String,
     val followerCount:Int,
     val followingCount:Int,

@@ -19,33 +19,36 @@ import kotlin.jvm.internal.Intrinsics
 fun Route.cratePostRoute(
     postService: PostService
 ){
-    post("/api/post/create") {
-        val request = call.receiveOrNull<CreatePostRequest>() ?: kotlin.run {
-            call.respond(HttpStatusCode.BadRequest)
-            return@post
-        }
+    authenticate {
+        post("/api/post/create") {
+            val request = call.receiveOrNull<CreatePostRequest>() ?: kotlin.run {
+                call.respond(HttpStatusCode.BadRequest)
+                return@post
+            }
 
-        val didUserExist = postService.createPost(request,call.userId,imageUrl = "")
+            val didUserExist = postService.createPost(request,call.userId,imageUrl = "")
 
-        if (didUserExist){
+            if (didUserExist){
 
-            call.respond(
-                HttpStatusCode.OK, ApiResponse(
-                    true,
-                    "",
-                    ""
+                call.respond(
+                    HttpStatusCode.OK, ApiResponse(
+                        true,
+                        "",
+                        ""
+                    )
                 )
-            )
-        }else{
-            call.respond(
-                HttpStatusCode.OK, ApiResponse(
-                    false,
-                    Constants.USER_NOT_FOUND,
-                    ""
+            }else{
+                call.respond(
+                    HttpStatusCode.OK, ApiResponse(
+                        false,
+                        Constants.USER_NOT_FOUND,
+                        ""
+                    )
                 )
-            )
+            }
         }
     }
+
 }
 
 fun Route.getPostsForFollows(
@@ -66,6 +69,8 @@ fun Route.getPostsForFollows(
         }
     }
 }
+
+
 
 fun Route.deletePost(
     postService: PostService,

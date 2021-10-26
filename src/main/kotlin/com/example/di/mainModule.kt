@@ -14,6 +14,7 @@ import com.example.data.repository.sportplan.SportPlanRepositoryImpl
 import com.example.data.repository.user.UserRepository
 import com.example.data.repository.user.UserRepositoryImp
 import com.example.service.*
+import com.google.gson.Gson
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import org.koin.dsl.module
@@ -46,10 +47,12 @@ val mainModule = module() {
     single<CommentRepository>{
         CommentRepositoryImpl(get())
     }
-    single { UserService(get()) }
+    single { UserService(get(),get()) }
     single { SportPlanService(get()) }
     single { FollowService(get()) }
     single { PostService(get()) }
     single { LikeService(get()) }
     single { CommentService(get()) }
+
+    single { Gson() }
 }

@@ -1,6 +1,6 @@
 package com.example.data.repository.user
 
-import com.example.UpdateProfileRequest
+import com.example.data.request.UpdateProfileRequest
 import com.example.data.models.User
 
 interface UserRepository {

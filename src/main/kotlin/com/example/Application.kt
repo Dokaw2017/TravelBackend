@@ -4,6 +4,7 @@ import com.example.di.mainModule
 import io.ktor.application.*
 import com.example.plugins.*
 import org.koin.ktor.ext.Koin
+import java.nio.file.Paths
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
@@ -19,4 +20,6 @@ fun Application.module() {
     configureSerialization()
     configureMonitoring()
     configureHTTP()
+
+    //println(Paths.get("").toAbsolutePath().toString())
 }

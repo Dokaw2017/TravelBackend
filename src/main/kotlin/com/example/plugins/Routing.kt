@@ -5,6 +5,7 @@ import com.example.service.*
 import io.ktor.routing.*
 import io.ktor.http.content.*
 import io.ktor.application.*
+import io.ktor.auth.*
 import org.koin.ktor.ext.inject
 
 fun Application.configureRouting() {
@@ -30,6 +31,9 @@ fun Application.configureRouting() {
             jwtAudience,
             jwtSecret
         )
+        getUserProfile(userService)
+        getPostsForProfile(postService)
+        updateUserProfile(userService)
 
         //Following Routes
         followUser(followService)

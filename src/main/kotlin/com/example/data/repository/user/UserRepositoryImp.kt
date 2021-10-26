@@ -1,8 +1,7 @@
 package com.example.data.repository.user
 
-import com.example.UpdateProfileRequest
+import com.example.data.request.UpdateProfileRequest
 import com.example.data.models.User
-import com.example.data.repository.user.UserRepository
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
 import java.util.*
@@ -36,18 +35,18 @@ class UserRepositoryImp(
                 username = updateProfileRequest.username,
                 password = user.password,
                 profileImageUrl = profileImageUrl,
-                firstName = user.firstName,
-                lastname = user.lastname,
+                firstName = updateProfileRequest.firstName,
+                lastname = updateProfileRequest.lastName,
                 email = user.email,
-                phoneNumber = user.phoneNumber,
+                phoneNumber = updateProfileRequest.phoneNumber,
                 gender = user.gender,
-                location = listOf("","",""),
-                hobbies = listOf("","",""),
-                birthDay = Date(),
+                location = updateProfileRequest.location,
+                hobbies = updateProfileRequest.hobbies,
+                birthDay = updateProfileRequest.birthDay,
                 buddyId = listOf("","",""),
                 inviteId = listOf("","",""),
                 friendsId = "",
-                bio = "",
+                bio = updateProfileRequest.bio,
                 followerCount = 7,
                 followingCount = 4,
                 postCount = 5,
