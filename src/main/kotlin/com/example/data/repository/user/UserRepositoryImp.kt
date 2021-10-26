@@ -26,6 +26,7 @@ class UserRepositoryImp(
     override suspend fun updateUser(
         userId: String,
         profileImageUrl:String,
+        bannerImageUrl:String,
         updateProfileRequest: UpdateProfileRequest
     ): Boolean {
         val user = getUserById(userId) ?: return false
@@ -35,6 +36,7 @@ class UserRepositoryImp(
                 username = updateProfileRequest.username,
                 password = user.password,
                 profileImageUrl = profileImageUrl,
+                bannerImageUrl = bannerImageUrl,
                 firstName = updateProfileRequest.firstName,
                 lastname = updateProfileRequest.lastName,
                 email = user.email,

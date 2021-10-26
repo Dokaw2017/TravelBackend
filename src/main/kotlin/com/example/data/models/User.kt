@@ -23,6 +23,7 @@ data class User(
     val buddyId:List<String>,
     val inviteId:List<String>,
     val friendsId:String,
+    val bannerImageUrl:String?,
     val profileImageUrl:String,
     val chatGroupId:List<String>,
     @BsonId

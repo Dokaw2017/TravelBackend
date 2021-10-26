@@ -20,6 +20,7 @@ class UserService(
                 username = request.username,
                 password = request.password,
                 profileImageUrl = "",
+                bannerImageUrl = "",
                 firstName = "",
                 lastname = "",
                 phoneNumber = 123456789,
@@ -73,8 +74,9 @@ class UserService(
     suspend fun updateUser(
         userId: String,
         profileImageUrl:String,
+        bannerImageUrl:String,
         updateProfileRequest: UpdateProfileRequest
     ):Boolean{
-        return userRepository.updateUser(userId,profileImageUrl,updateProfileRequest)
+        return userRepository.updateUser(userId,profileImageUrl,bannerImageUrl,updateProfileRequest)
     }
 }

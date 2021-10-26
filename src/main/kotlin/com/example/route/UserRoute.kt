@@ -1,5 +1,6 @@
 package com.example.route
 
+import com.example.Utils.Constants.BANNER_IMAGE_PATH
 import com.example.data.request.UpdateProfileRequest
 import com.example.Utils.Constants.BASE_URL
 import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
@@ -24,7 +25,7 @@ import java.util.*
 
 fun Route.getPostsForProfile(
     postService: PostService,
-){
+) {
     authenticate {
         get("/api/user/posts") {
 
@@ -44,6 +45,7 @@ fun Route.getPostsForProfile(
         }
     }
 }
+
 fun Route.getUserProfile(userService: UserService) {
     authenticate {
         get("/api/user/profile") {
@@ -71,71 +73,83 @@ fun Route.getUserProfile(userService: UserService) {
         }
     }
 }
-fun Route.general(){
-    get ("/"){
+
+fun Route.general() {
+    get("/") {
         call.respond("Hello Zak, I am running as you can tell!")
     }
 }
+
 fun Route.updateUserProfile(
     userService: UserService
 ) {
     val gson: Gson by inject()
-authenticate {
+    authenticate {
 
-    put("/api/user/update") {
+        put("/api/user/update") {
 
-        val multipart = call.receiveMultipart()
-        var updateProfileRequest: UpdateProfileRequest? = null
-        var fileName:String? = null
-        multipart.forEachPart {partData ->
-            when(partData){
-                is PartData.FormItem->{
-                    if (partData.name == "update_profile_data"){
-                        updateProfileRequest = gson.fromJson(
-                            partData.value,
-                            UpdateProfileRequest::class.java)
+            val multipart = call.receiveMultipart()
+            var updateProfileRequest: UpdateProfileRequest? = null
+            var profilePictureFilename:String? = null
+            var bannerPictureFilename:String? = null
+            //var fileName: String? = null
+            multipart.forEachPart { partData ->
+                when (partData) {
+                    is PartData.FormItem -> {
+                        if (partData.name == "update_profile_data") {
+                            updateProfileRequest = gson.fromJson(
+                                partData.value,
+                                UpdateProfileRequest::class.java
+                            )
+
+                        }
+                    }
+                    is PartData.FileItem -> {
+                        if(partData.name == "profile_picture"){
+
+                            profilePictureFilename = partData.save(PROFILE_PICTURE_PATH)
+                        }else if (partData.name == "banner_image"){
+                            bannerPictureFilename = partData.save(BANNER_IMAGE_PATH)
+                        }
+
+                        /*val fileBytes = partData.streamProvider().readBytes()
+                        val fileExtension = partData.originalFileName?.takeLastWhile { it != '.' }
+                        fileName = UUID.randomUUID().toString() + "." + fileExtension
+
+                        File("${PROFILE_PICTURE_PATH}$fileName").writeBytes(fileBytes)
+                        //fileName = partData.save(PROFILE_PICTURE_PATH)*/
 
                     }
+                    is PartData.BinaryItem -> Unit
                 }
-                is PartData.FileItem->{
-                   fileName= partData.save(PROFILE_PICTURE_PATH)
+            }
+            val profilePictureUrl = "${BASE_URL}profile_pictures/$profilePictureFilename"
+            val bannerPictureUrl = "${BASE_URL}banner_images/$bannerPictureFilename"
+            //val profilePictureUrl = "${BASE_URL}src/main/$PROFILE_PICTURE_PATH$fileName"
 
-                    /*val fileBytes = partData.streamProvider().readBytes()
-                    val fileExtension = partData.originalFileName?.takeLastWhile { it != '.' }
-                    fileName = UUID.randomUUID().toString() + "." + fileExtension
+            updateProfileRequest?.let { request ->
 
-                    File("${PROFILE_PICTURE_PATH}$fileName").writeBytes(fileBytes)
-                    //fileName = partData.save(PROFILE_PICTURE_PATH)*/
+                val updateAcknowledged = userService.updateUser(
+                    userId = call.userId,
+                    profileImageUrl = profilePictureUrl,
+                    bannerImageUrl = bannerPictureUrl,
+                    updateProfileRequest = request
+                )
+
+                if (updateAcknowledged) {
+                    call.respond(HttpStatusCode.OK, ApiResponse<Unit>(true, ""))
+
+                } else {
+                    File("${PROFILE_PICTURE_PATH}/$profilePictureFilename").delete()
+                    call.respond(HttpStatusCode.InternalServerError)
 
                 }
-                is PartData.BinaryItem->Unit
+            } ?: kotlin.run {
+                call.respond(HttpStatusCode.BadRequest)
+                return@put
             }
+
         }
-        val profilePictureUrl = "${BASE_URL}profile_pictures/$fileName"
-        //val profilePictureUrl = "${BASE_URL}src/main/$PROFILE_PICTURE_PATH$fileName"
-
-        updateProfileRequest?.let {request->
-
-            val updateAcknowledged = userService.updateUser(
-                userId = call.userId,
-                profileImageUrl = profilePictureUrl,
-                updateProfileRequest = request
-            )
-
-            if (updateAcknowledged){
-                call.respond(HttpStatusCode.OK,ApiResponse<Unit>(true,""))
-
-            }else{
-                File("${PROFILE_PICTURE_PATH}/$fileName").delete()
-                call.respond(HttpStatusCode.InternalServerError)
-
-            }
-        } ?: kotlin.run {
-            call.respond(HttpStatusCode.BadRequest)
-            return@put
-        }
-
     }
 }
-    }
 
