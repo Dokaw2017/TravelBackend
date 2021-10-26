@@ -2,53 +2,84 @@ package com.example.route
 
 import com.example.Utils.Constants
 import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
+import com.example.Utils.Constants.POST_PICTURE_PATH
+import com.example.Utils.Constants.PROFILE_PICTURE_PATH
 import com.example.Utils.QueryParams
+import com.example.Utils.save
 import com.example.data.request.CreatePostRequest
 import com.example.data.request.DeletePostRequest
+import com.example.data.request.UpdateProfileRequest
 import com.example.data.response.ApiResponse
 import com.example.service.LikeService
 import com.example.service.PostService
+import com.example.service.UserService
+import com.google.gson.Gson
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
+import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import org.koin.ktor.ext.inject
+import java.io.File
+import java.util.*
 import kotlin.jvm.internal.Intrinsics
 
 fun Route.cratePostRoute(
     postService: PostService
-){
+) {
+    val gson: Gson by inject()
     authenticate {
         post("/api/post/create") {
-            val request = call.receiveOrNull<CreatePostRequest>() ?: kotlin.run {
+            val multipart = call.receiveMultipart()
+            var createPostRequest: CreatePostRequest? = null
+            var fileName: String? = null
+            multipart.forEachPart { partData ->
+                when (partData) {
+                    is PartData.FormItem -> {
+                        if (partData.name == "post_data") {
+                            createPostRequest = gson.fromJson(
+                                partData.value,
+                                CreatePostRequest::class.java
+                            )
+
+                        }
+                    }
+                    is PartData.FileItem -> {
+
+                        fileName = partData.save(POST_PICTURE_PATH)
+
+                    }
+                    is PartData.BinaryItem -> Unit
+                }
+            }
+            val postPictureUrl = "${Constants.BASE_URL}post_pictures/$fileName"
+            //val profilePictureUrl = "${BASE_URL}src/main/$PROFILE_PICTURE_PATH$fileName"
+
+            createPostRequest?.let { request ->
+
+                val createPostAcknowledged = postService.createPost(
+                    request = request,
+                    userId = call.userId,
+                    imageUrl = postPictureUrl
+                )
+
+                if (createPostAcknowledged) {
+                    call.respond(HttpStatusCode.OK, ApiResponse<Unit>(true, ""))
+
+                } else {
+                    File("${Constants.POST_PICTURE_PATH}/$fileName").delete()
+                    call.respond(HttpStatusCode.InternalServerError)
+
+                }
+            } ?: kotlin.run {
                 call.respond(HttpStatusCode.BadRequest)
                 return@post
             }
-
-            val didUserExist = postService.createPost(request,call.userId,imageUrl = "")
-
-            if (didUserExist){
-
-                call.respond(
-                    HttpStatusCode.OK, ApiResponse(
-                        true,
-                        "",
-                        ""
-                    )
-                )
-            }else{
-                call.respond(
-                    HttpStatusCode.OK, ApiResponse(
-                        false,
-                        Constants.USER_NOT_FOUND,
-                        ""
-                    )
-                )
-            }
         }
-    }
 
+    }
 }
 
 fun Route.getPostsForFollows(

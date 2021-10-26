@@ -6,6 +6,7 @@ import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
 import com.example.Utils.Constants.PROFILE_PICTURE_PATH
 import com.example.Utils.Constants.USER_NOT_FOUND
 import com.example.Utils.QueryParams
+import com.example.Utils.save
 import com.example.data.response.ApiResponse
 import com.example.service.PostService
 import com.example.service.UserService
@@ -97,12 +98,14 @@ authenticate {
                     }
                 }
                 is PartData.FileItem->{
-                    val fileBytes = partData.streamProvider().readBytes()
+                   fileName= partData.save(PROFILE_PICTURE_PATH)
+
+                    /*val fileBytes = partData.streamProvider().readBytes()
                     val fileExtension = partData.originalFileName?.takeLastWhile { it != '.' }
                     fileName = UUID.randomUUID().toString() + "." + fileExtension
 
                     File("${PROFILE_PICTURE_PATH}$fileName").writeBytes(fileBytes)
-                    //fileName = partData.save(PROFILE_PICTURE_PATH)
+                    //fileName = partData.save(PROFILE_PICTURE_PATH)*/
 
                 }
                 is PartData.BinaryItem->Unit
