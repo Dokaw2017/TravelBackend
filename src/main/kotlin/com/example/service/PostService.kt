@@ -41,5 +41,8 @@ class PostService(
 
     suspend fun getPost(postId:String): Post? = repository.getPost(postId)
 
-
+    suspend fun getAllPosts(page:Int = 0,
+                            pageSize:Int = DEFAULT_PAGE_SIZE):List<Post>{
+        return repository.getAllPosts(page,pageSize)
+    }
 }

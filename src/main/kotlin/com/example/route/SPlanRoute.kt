@@ -30,7 +30,7 @@ fun Route.createSPlan(
             }
 
 
-            if (request.name.isBlank() || request.place.isBlank()) {
+            if (request.title.isBlank() || request.place.isBlank()) {
                 call.respond(ApiResponse<Unit>(false, ApiMessages.FIELD_BLANK))
                 return@post
             }
@@ -58,4 +58,18 @@ authenticate {
         )
     }
 }
+}
+
+fun Routing.getAllSPlans(
+    sportPlanService: SportPlanService
+){
+
+        get("/api/post/all") {
+            val posts = sportPlanService.getSPlans()
+            call.respond(
+                HttpStatusCode.OK,
+                posts
+            )
+        }
+
 }

@@ -29,12 +29,12 @@ fun Route.getPostsForProfile(
 ) {
     authenticate {
         get("/api/user/posts") {
-
+            val userId = call.parameters[QueryParams.PARAM_USER_ID]
             val page = call.parameters[QueryParams.PARAM_PAGE]?.toIntOrNull() ?: 0
             val pageSize = call.parameters[QueryParams.PARAM_PAGE_SIZE]?.toIntOrNull() ?: DEFAULT_PAGE_SIZE
 
             val posts = postService.getPostsForProfile(
-                userId = call.userId,
+                userId = userId ?: call.userId,
                 page = page,
                 pageSize = pageSize
             )
@@ -69,7 +69,12 @@ fun Route.getUserProfile(userService: UserService) {
                 return@get
             }
             call.respond(
-                HttpStatusCode.OK, profileResponse
+                HttpStatusCode.OK,
+                ApiResponse(
+                    true,
+                    "",
+                    data = profileResponse
+                )
         )
 
         }
@@ -81,6 +86,8 @@ fun Route.general(){
         call.respond("Hello Zak, I am running as you can tell!")
     }
 }
+
+
 
 fun Route.updateUserProfile(
     userService: UserService

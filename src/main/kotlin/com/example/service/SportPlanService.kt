@@ -11,7 +11,7 @@ class SportPlanService(
     suspend fun createSportPlan(request:CreateSportPlanRequest,userId:String):Boolean{
         return sportPlanRepository.createSportPlan(
             SportPlan(
-                title = request.name,
+                title = request.title,
                 place = request.place,
                 userId = userId,
                 date = request.date,
@@ -29,4 +29,8 @@ class SportPlanService(
     }
 
     suspend fun deleteSPlan(spId: String) = sportPlanRepository.deleteSPlan(spId)
+
+    suspend fun getSPlans():List<SportPlan>{
+        return sportPlanRepository.getSPlans()
+    }
 }

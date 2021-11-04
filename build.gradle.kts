@@ -4,15 +4,18 @@ val logback_version: String by project
 val koin_version: String by project
 val kmongo_version: String by project
 
+
 plugins {
     application
     kotlin("jvm") version "1.5.31"
+
 }
 
 group = "com.example"
 version = "0.0.1"
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
+
 }
 
 tasks.create("stage") {
@@ -22,6 +25,7 @@ tasks.create("stage") {
 
 repositories {
     mavenCentral()
+    google()
 }
 
 dependencies {
@@ -59,4 +63,5 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test:$kotlin_version")
     //Truth
     testImplementation( "com.google.truth:truth:1.1.3")
+
 }

@@ -25,6 +25,7 @@ fun Application.configureRouting() {
         //User routes
         authenticate()
         general()
+        fire()
         createUser(userService)
         loginUser(
             userService,
@@ -48,15 +49,18 @@ fun Application.configureRouting() {
         //Plan Routes
         createSPlan(sportPlanService)
         getSPlans(sportPlanService)
+        getAllSPlans(sportPlanService)
+        getAllPosts(postService)
 
         //Like Route
         likePost(likeService)
         unlikePost(likeService)
 
-        //Post Route
+        //Comment Route
         createComment(commentService)
         deleteComment(commentService,likeService)
         getCommentsForPost(commentService)
+
 
         static{
             resources("static")

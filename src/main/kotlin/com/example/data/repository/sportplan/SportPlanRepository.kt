@@ -10,5 +10,7 @@ interface SportPlanRepository {
 
     suspend fun getSPlans(userId: String):List<SportPlan>
 
+    suspend fun getSPlans():List<SportPlan>
+
     suspend fun deleteSPlan(spId:String)
 }

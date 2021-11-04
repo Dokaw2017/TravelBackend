@@ -22,6 +22,10 @@ class SportPlanRepositoryImpl(
        return sportPlans.find(SportPlan::userId `in` userId ).toList()
     }
 
+    override suspend fun getSPlans(): List<SportPlan> {
+        return sportPlans.find().toList()
+    }
+
     override suspend fun deleteSPlan(spId: String) {
         sportPlans.deleteOneById(spId)
     }

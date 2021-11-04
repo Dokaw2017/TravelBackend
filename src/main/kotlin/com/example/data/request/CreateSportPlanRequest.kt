@@ -1,7 +1,7 @@
 package com.example.data.request
 
 data class CreateSportPlanRequest(
-    val name:String,
+    val title:String,
     val place:String,
     val date:String,
     val startingTime:String,

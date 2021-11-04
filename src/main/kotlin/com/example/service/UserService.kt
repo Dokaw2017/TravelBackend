@@ -57,6 +57,7 @@ class UserService(
             followerCount = user.followerCount,
             followingCount = user.followingCount,
             postCount = user.postCount,
+            bannerImageUrl = user.bannerImageUrl,
             profilePictureUrl = user.profileImageUrl,
             hobbies = user.hobbies,
             isOwnProfile = userId == callerUserId,

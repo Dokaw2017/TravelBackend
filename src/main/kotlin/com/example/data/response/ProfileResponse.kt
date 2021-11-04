@@ -8,6 +8,7 @@ data class ProfileResponse(
     val followerCount:Int,
     val followingCount:Int,
     val postCount:Int,
+    val bannerImageUrl:String,
     val isBuddy:Boolean,
     val isOwnProfile:Boolean
 )

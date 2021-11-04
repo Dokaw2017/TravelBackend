@@ -32,5 +32,9 @@ fun Application.configureSecurity() {
 
 }
 
+
+
 val JWTPrincipal.userId:String?
     get() = getClaim("userId",String::class)
+
+
