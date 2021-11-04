@@ -106,15 +106,9 @@ fun Routing.loginUser(
 }
 
 fun Route.authenticate() {
-  /*  authenticate {
+   authenticate {
         get("/api/user/authenticate") {
             call.respond(HttpStatusCode.OK)
-        }
-    }*/
-
-    authenticate {
-        get("/authenticate") {
-            call.respond(HttpStatusCode.OK, "My name is ${call.principal<com.example.model.User>()?.username}, and I'm authenticated!")
         }
     }
 

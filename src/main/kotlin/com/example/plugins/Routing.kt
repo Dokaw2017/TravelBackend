@@ -25,7 +25,6 @@ fun Application.configureRouting() {
         //User routes
         authenticate()
         general()
-        fire()
         createUser(userService)
         loginUser(
             userService,
