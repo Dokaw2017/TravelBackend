@@ -9,13 +9,12 @@ import com.example.data.repository.like.LikeRepository
 import com.example.data.repository.like.LikeRepositoryImpl
 import com.example.data.repository.post.PostRepository
 import com.example.data.repository.post.PostRepositoryImpl
-import com.example.data.repository.sportplan.SportPlanRepository
-import com.example.data.repository.sportplan.SportPlanRepositoryImpl
+import com.example.data.repository.event.EventRepository
+import com.example.data.repository.event.EventRepositoryImpl
 import com.example.data.repository.user.UserRepository
 import com.example.data.repository.user.UserRepositoryImp
 import com.example.service.*
 import com.google.gson.Gson
-import com.mongodb.client.gridfs.GridFSBuckets
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import org.koin.dsl.module
@@ -26,19 +25,11 @@ val mainModule = module() {
         client.getDatabase(DATABASE_NAME)
     }
 
-   /* single {
-        val client = KMongo.createClient(System.getenv("MONGO_URI") ?: "")
-        val database = client.getDatabase("travel")
-        //val bucket = GridFSBuckets.create(database, "raddar")
-        val bucket = com.mongodb.reactivestreams.client.gridfs.GridFSBuckets.create(database,"raddar")
-
-    }*/
-
     single<UserRepository>{
         UserRepositoryImp(get())
     }
-    single<SportPlanRepository>{
-        SportPlanRepositoryImpl(get())
+    single<EventRepository>{
+        EventRepositoryImpl(get())
     }
 
     single<FollowRepository>{
@@ -57,7 +48,7 @@ val mainModule = module() {
         CommentRepositoryImpl(get())
     }
     single { UserService(get(),get()) }
-    single { SportPlanService(get()) }
+    single { EventService(get(),get()) }
     single { FollowService(get()) }
     single { PostService(get()) }
     single { LikeService(get()) }

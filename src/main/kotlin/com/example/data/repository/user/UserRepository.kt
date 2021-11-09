@@ -18,4 +18,6 @@ interface UserRepository {
         updateProfileRequest: UpdateProfileRequest
     ):Boolean
 
+    suspend fun searchForUsers(query:String):List<User>
+
 }

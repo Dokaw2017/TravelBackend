@@ -4,6 +4,7 @@ import com.example.data.request.UpdateProfileRequest
 import com.example.data.models.User
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
+import org.litote.kmongo.regex
 import java.util.*
 
 class UserRepositoryImp(
@@ -56,6 +57,10 @@ class UserRepositoryImp(
                 id = userId
             )
         ).wasAcknowledged()
+    }
+
+    override suspend fun searchForUsers(query: String): List<User> {
+        return users.find(User::username regex Regex("(?i).*$query.*")).toList()
     }
 
 }

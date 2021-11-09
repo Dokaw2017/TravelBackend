@@ -169,4 +169,23 @@ fun Route.updateUserProfile(
     }
 }
 
+/*fun Route.searchUser(userService: UserService) {
+    authenticate {
+        get("/api/user/search") {
+            val query = call.parameters[QueryParams.PARAM_QUERY]
+            if (query == null || query.isBlank()) {
+                call.respond(
+                    HttpStatusCode.OK,
+                    listOf<UserResponseItem>()
+                )
+                return@get
+            }
+            val searchResults = userService.searchForUsers(query, call.userId)
+            call.respond(
+                HttpStatusCode.OK,
+                searchResults
+            )
+        }
+    }
+}*/
 

@@ -2,16 +2,15 @@ package com.example.data.models
 
 import org.bson.codecs.pojo.annotations.BsonId
 import org.bson.types.ObjectId
-import kotlin.time.Duration
-import kotlin.time.ExperimentalTime
 
-data class Event @OptIn(ExperimentalTime::class) constructor(
-    val name:String,
+
+data class Event (
+    val title:String,
     val place:String,
-    val duration: Duration,
-    val timestamp:Long,
-    val participants:Int,
-
+    val date:String,
+    val userId:String,
+    val time: String,
+    val category:String,
     @BsonId
     val id:String = ObjectId().toString()
 )

@@ -21,7 +21,7 @@ class CommentRepositoryImpl(
     }
 
     override suspend fun deleteCommentsFromPost(postId: String): Boolean {
-        TODO("Not yet implemented")
+        return comments.deleteMany(Comment::postId eq postId).wasAcknowledged()
     }
 
     override suspend fun getCommentsForPost(postId: String): List<Comment> {

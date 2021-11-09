@@ -2,7 +2,7 @@ package com.example.plugins
 
 import com.example.route.*
 import com.example.service.*
-import com.example.service.SportPlanService
+import com.example.service.EventService
 import com.example.service.UserService
 import io.ktor.routing.*
 import io.ktor.http.content.*
@@ -12,7 +12,7 @@ import org.koin.ktor.ext.inject
 fun Application.configureRouting() {
     
     val userService:UserService by inject()
-    val sportPlanService:SportPlanService by inject()
+    val eventService:EventService by inject()
     val followService:FollowService by inject()
     val postService: PostService by inject()
     val likeService: LikeService by inject()
@@ -43,13 +43,13 @@ fun Application.configureRouting() {
         //Post Routes
         cratePostRoute(postService)
         getPostsForFollows(postService)
-        deletePost(postService,likeService)
+        deletePost(postService,likeService,commentService)
 
-        //Plan Routes
-        createSPlan(sportPlanService)
-        getSPlans(sportPlanService)
-        getAllSPlans(sportPlanService)
-        getAllPosts(postService)
+        //Event Routes
+        createEvent(eventService)
+        getEventsByUser(eventService)
+        getAllEvents(eventService)
+        getEvents(eventService)
 
         //Like Route
         likePost(likeService)
