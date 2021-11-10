@@ -12,7 +12,6 @@ class CommentRepositoryImpl(
 
     override suspend fun createComment(comment: Comment) {
         comments.insertOne(comment)
-
     }
 
     override suspend fun deleteComment(commentId: String): Boolean {

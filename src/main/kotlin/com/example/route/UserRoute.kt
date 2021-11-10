@@ -21,7 +21,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 import java.io.File
-import java.util.*
+
 
 
 fun Route.getPostsForProfile(
@@ -166,6 +166,33 @@ fun Route.updateUserProfile(
             }
         }
 
+    }
+}
+
+fun Route.getMyProfile(userService: UserService){
+    authenticate {
+        get("/api/user/myprofile"){
+            val profileResponse = userService.getMyProfile(call.userId)
+
+            if (profileResponse == null) {
+                call.respond(
+                    HttpStatusCode.OK, ApiResponse(
+                        false,
+                        USER_NOT_FOUND,
+                        ""
+                    )
+                )
+                return@get
+            }
+            call.respond(
+                HttpStatusCode.OK,
+                ApiResponse(
+                    true,
+                    "",
+                    data = profileResponse
+                )
+            )
+        }
     }
 }
 

@@ -1,9 +1,6 @@
 package com.example.data.repository.post
 
-import com.example.data.models.Following
 import com.example.data.models.Post
-import com.mongodb.client.gridfs.GridFSBuckets
-import org.litote.kmongo.KMongo
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
 
@@ -11,7 +8,6 @@ class PostRepositoryImpl(
     db: CoroutineDatabase
 ):PostRepository {
     private val posts = db.getCollection<Post>()
-    private val following = db.getCollection<Following>()
 
 
     override suspend fun createPost(post: Post):Boolean {

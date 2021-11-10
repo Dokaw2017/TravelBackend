@@ -19,7 +19,8 @@ class EventService(
                 userId = userId,
                 date = request.date,
                 time = request.time,
-                category = request.category
+                category = request.category,
+                isBuddy = false
             )
         )
     }
@@ -48,7 +49,8 @@ class EventService(
                     profileImageUrl = user.profileImageUrl,
                     place = event.place,
                     time = event.time,
-                    date = event.date
+                    date = event.date,
+                    isBuddy = event.isBuddy
                 )
             }
         }

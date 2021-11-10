@@ -3,7 +3,6 @@ package com.example.route
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.example.Utils.ApiMessages
-import com.example.data.models.User
 import com.example.data.request.LoginRequest
 import com.example.data.request.RegistrationRequest
 import com.example.data.response.ApiResponse

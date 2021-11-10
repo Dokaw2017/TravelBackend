@@ -1,7 +1,6 @@
 package com.example.route
 
 import com.example.Utils.Constants.USER_NOT_FOUND
-import com.example.Utils.QueryParams
 import com.example.data.request.LikeUpdateRequest
 import com.example.data.response.ApiResponse
 import com.example.service.LikeService

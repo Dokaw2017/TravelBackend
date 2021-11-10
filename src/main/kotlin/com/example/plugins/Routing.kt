@@ -35,6 +35,7 @@ fun Application.configureRouting() {
         getUserProfile(userService)
         getPostsForProfile(postService)
         updateUserProfile(userService)
+        getMyProfile(userService)
 
         //Following Routes
         followUser(followService)
@@ -44,6 +45,7 @@ fun Application.configureRouting() {
         cratePostRoute(postService)
         getPostsForFollows(postService)
         deletePost(postService,likeService,commentService)
+        getAllPosts(postService)
 
         //Event Routes
         createEvent(eventService)

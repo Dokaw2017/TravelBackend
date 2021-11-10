@@ -6,6 +6,7 @@ import com.example.data.repository.follow.FollowRepository
 import com.example.data.repository.user.UserRepository
 import com.example.data.request.RegistrationRequest
 import com.example.data.response.ProfileResponse
+import com.example.data.response.ProfileResponse2
 import java.util.*
 
 class UserService(
@@ -52,6 +53,7 @@ class UserService(
     suspend fun getUserProfile(userId: String, callerUserId:String):ProfileResponse?{
         val user = userRepository.getUserById(userId) ?: return null
         return ProfileResponse(
+            userId = user.id,
             username = user.username,
             bio = user.bio,
             followerCount = user.followerCount,
@@ -67,6 +69,23 @@ class UserService(
                 false
             }
             )
+    }
+
+    suspend fun getMyProfile(userId: String): ProfileResponse2?{
+        val user = userRepository.getUserById(userId) ?: return null
+
+        return ProfileResponse2(
+            userId = user.id,
+            username = user.username,
+            bio = user.bio,
+            followerCount = user.followerCount,
+            followingCount = user.followingCount,
+            postCount = user.postCount,
+            bannerImageUrl = user.bannerImageUrl,
+            profilePictureUrl = user.profileImageUrl,
+            hobbies = user.hobbies,
+            isBuddy = false,
+        )
     }
 
     suspend fun getUserById(userId: String):User?{

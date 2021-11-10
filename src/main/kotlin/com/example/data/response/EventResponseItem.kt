@@ -6,5 +6,6 @@ data class EventResponseItem(
     val profileImageUrl:String,
     val place:String,
     val date:String,
-    val time:String
+    val time:String,
+    val isBuddy:Boolean
 )

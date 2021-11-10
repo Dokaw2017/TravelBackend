@@ -2,10 +2,11 @@ package com.example.data.repository.user
 
 import com.example.data.request.UpdateProfileRequest
 import com.example.data.models.User
+import com.example.data.response.ProfileResponse
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
 import org.litote.kmongo.regex
-import java.util.*
+
 
 class UserRepositoryImp(
     db:CoroutineDatabase
@@ -23,6 +24,10 @@ class UserRepositoryImp(
     override suspend fun getUserByEmail(email: String): User? {
         return users.findOne(User::email eq email)
     }
+
+    /*override suspend fun getMyProfile(userId: String): ProfileResponse? {
+        return users.findOne(User::id eq userId)
+    }*/
 
     override suspend fun updateUser(
         userId: String,

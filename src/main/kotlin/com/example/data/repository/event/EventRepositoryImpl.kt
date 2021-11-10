@@ -1,15 +1,14 @@
 package com.example.data.repository.event
 
 import com.example.data.models.Event
-import com.example.data.models.User
 import org.litote.kmongo.`in`
 import org.litote.kmongo.coroutine.CoroutineDatabase
 
 class EventRepositoryImpl(
     db:CoroutineDatabase
 ):EventRepository {
+
     private val sportPlans = db.getCollection<Event>()
-    private val users = db.getCollection<User>()
 
     override suspend fun createEvent(sportPlan: Event): Boolean {
          return sportPlans.insertOne(sportPlan).wasAcknowledged()

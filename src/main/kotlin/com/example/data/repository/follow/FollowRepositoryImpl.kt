@@ -2,7 +2,6 @@ package com.example.data.repository.follow
 
 import com.example.data.models.Following
 import com.example.data.models.User
-import com.example.data.repository.follow.FollowRepository
 import org.litote.kmongo.and
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq

@@ -2,6 +2,7 @@ package com.example.data.repository.user
 
 import com.example.data.request.UpdateProfileRequest
 import com.example.data.models.User
+import com.example.data.response.ProfileResponse
 
 interface UserRepository {
 
@@ -11,6 +12,8 @@ interface UserRepository {
 
     suspend fun getUserByEmail(email:String):User?
 
+    /*suspend fun getMyProfile(userId: String):ProfileResponse?
+*/
     suspend fun updateUser(
         userId: String,
         profileImageUrl:String,

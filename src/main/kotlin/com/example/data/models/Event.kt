@@ -11,6 +11,7 @@ data class Event (
     val userId:String,
     val time: String,
     val category:String,
+    val isBuddy:Boolean,
     @BsonId
     val id:String = ObjectId().toString()
 )

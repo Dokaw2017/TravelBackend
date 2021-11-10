@@ -1,24 +1,17 @@
 package com.example.route
 
-import com.example.Utils.Constants
 import com.example.Utils.Constants.BASE_URL
-import com.example.Utils.Constants.DATABASE_NAME
 import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
 import com.example.Utils.Constants.POST_PICTURE_PATH
-import com.example.Utils.Constants.PROFILE_PICTURE_PATH
 import com.example.Utils.QueryParams
 import com.example.Utils.save
-import com.example.data.models.User
 import com.example.data.request.CreatePostRequest
 import com.example.data.request.DeletePostRequest
-import com.example.data.request.UpdateProfileRequest
 import com.example.data.response.ApiResponse
 import com.example.service.CommentService
 import com.example.service.LikeService
 import com.example.service.PostService
-import com.example.service.UserService
 import com.google.gson.Gson
-import com.mongodb.client.gridfs.GridFSBuckets
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.http.*
@@ -26,13 +19,9 @@ import io.ktor.http.content.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.koin.ktor.ext.inject
-import org.litote.kmongo.KMongo
 import java.io.File
-import java.util.*
-import kotlin.jvm.internal.Intrinsics
+
 
 fun Route.cratePostRoute(
     postService: PostService
@@ -40,10 +29,7 @@ fun Route.cratePostRoute(
     val gson: Gson by inject()
     authenticate {
         post("/api/post/create") {
-           /* val client = KMongo.createClient()
-            val database = client.getDatabase("travel")
-            val bucket = GridFSBuckets.create(database, "raddar")
-*/
+
             val multipart = call.receiveMultipart()
             var createPostRequest: CreatePostRequest? = null
             var fileName: String? = null

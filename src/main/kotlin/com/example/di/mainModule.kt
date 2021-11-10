@@ -24,26 +24,21 @@ val mainModule = module() {
         val client = KMongo.createClient(System.getenv("MONGO_URI") ?: "").coroutine
         client.getDatabase(DATABASE_NAME)
     }
-
     single<UserRepository>{
         UserRepositoryImp(get())
     }
     single<EventRepository>{
         EventRepositoryImpl(get())
     }
-
     single<FollowRepository>{
         FollowRepositoryImpl(get())
     }
-
     single<LikeRepository>{
         LikeRepositoryImpl(get())
     }
-
     single<PostRepository>{
         PostRepositoryImpl(get())
     }
-
     single<CommentRepository>{
         CommentRepositoryImpl(get())
     }
