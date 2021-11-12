@@ -47,7 +47,7 @@ fun Route.cratePostRoute(
                     }
                     is PartData.FileItem -> {
 
-                        fileName = partData.save(POST_PICTURE_PATH)
+                        fileName ="chebude"
                        /* fileNamee = partData.originalFileName as String
                         withContext(Dispatchers.IO){
                             bucket.uploadFromStream(fileNamee,partData.streamProvider())
@@ -57,17 +57,17 @@ fun Route.cratePostRoute(
                     is PartData.BinaryItem -> Unit
                 }
             }
-            val postPictureUrl = "${BASE_URL}post_pictures/$fileName"
+          //  val postPictureUrl = "${BASE_URL}post_pictures/$fileName"
             //val postPictureUrll = "${BASE_URL}travel/${User::username}"
             //val postPictureUrll = "${BASE_URL}travel/${User::username}" + UUID.randomUUID() + ".png"
             //val profilePictureUrl = "${BASE_URL}src/main/$PROFILE_PICTURE_PATH$fileName"
 
             createPostRequest?.let { request ->
-
+              println(request)
                 val createPostAcknowledged = postService.createPost(
                     request = request,
                     userId = call.userId,
-                    imageUrl = postPictureUrl
+                    imageUrl = request.image
                 )
 
                 if (createPostAcknowledged) {

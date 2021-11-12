@@ -11,7 +11,7 @@ class PostService(
     suspend fun createPost(request: CreatePostRequest, userId: String, imageUrl:String):Boolean{
         return repository.createPost(
             Post(
-                imageUrl = imageUrl,
+                imageUrl = request.image,
                 userId = userId,
                 timestamp = System.currentTimeMillis(),
                 description = request.description
