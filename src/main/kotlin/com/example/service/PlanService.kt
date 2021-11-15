@@ -1,39 +1,40 @@
 package com.example.service
 
-import com.example.data.models.Event
-import com.example.data.repository.event.EventRepository
+import com.example.data.models.Plan
+import com.example.data.repository.plan.PlanRepository
 import com.example.data.repository.user.UserRepository
 import com.example.data.request.CreateEventRequest
 import com.example.data.response.EventResponseItem
 
-class EventService(
-    private val sportPlanRepository: EventRepository,
+class PlanService(
+    private val sportPlanRepository: PlanRepository,
     private val userRepository: UserRepository
 ) {
 
     suspend fun createEvent(request:CreateEventRequest,userId:String):Boolean{
         return sportPlanRepository.createEvent(
-            Event(
+            Plan(
                 title = request.title,
                 place = request.place,
                 userId = userId,
                 date = request.date,
                 time = request.time,
                 category = request.category,
+                subCategory = request.subCategory,
                 isBuddy = false
             )
         )
     }
 
-    suspend fun getEventById(eventId:String):Event? = sportPlanRepository.getEventById(eventId)
+    suspend fun getEventById(eventId:String):Plan? = sportPlanRepository.getEventById(eventId)
 
-    suspend fun getEventsByUser(userId: String):List<Event>{
+    suspend fun getEventsByUser(userId: String):List<Plan>{
         return sportPlanRepository.getEventsByUser(userId)
     }
 
     suspend fun deleteEvent(eventId: String) = sportPlanRepository.deleteEvent(eventId)
 
-    suspend fun getAllEvents():List<Event>{
+    suspend fun getAllEvents():List<Plan>{
         return sportPlanRepository.getAllEvents()
     }
 

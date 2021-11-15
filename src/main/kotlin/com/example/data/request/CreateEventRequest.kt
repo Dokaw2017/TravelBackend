@@ -6,4 +6,5 @@ data class CreateEventRequest(
     val date:String,
     val time: String,
     val category:String,
+    val subCategory:String
 )

@@ -3,7 +3,7 @@ package com.example.route
 import com.example.Utils.ApiMessages
 import com.example.data.request.CreateEventRequest
 import com.example.data.response.ApiResponse
-import com.example.service.EventService
+import com.example.service.PlanService
 import com.google.gson.Gson
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -14,13 +14,13 @@ import io.ktor.routing.*
 import org.koin.ktor.ext.inject
 
 fun Route.createEvent(
-    eventService: EventService,
+    eventService: PlanService,
 ) {
     val gson by inject<Gson>()
 
     authenticate {
 
-        post("/api/event/create") {
+        post("/api/plan/create") {
 
             val request = call.receiveOrNull<CreateEventRequest>() ?: kotlin.run {
                 call.respond(HttpStatusCode.BadRequest)
@@ -43,11 +43,11 @@ fun Route.createEvent(
 }
 
 fun Routing.getEventsByUser(
-    eventService: EventService,
+    eventService: PlanService,
 ){
 
 authenticate {
-    get("/api/event/get") {
+    get("/api/plan/get") {
 
         val posts = eventService.getEventsByUser(call.userId)
         call.respond(
@@ -59,10 +59,10 @@ authenticate {
 }
 
 fun Routing.getAllEvents(
-    eventService: EventService
+    eventService: PlanService
 ){
 
-        get("/api/event/all") {
+        get("/api/plan/all") {
             val posts = eventService.getAllEvents()
             call.respond(
                 HttpStatusCode.OK,
@@ -72,9 +72,9 @@ fun Routing.getAllEvents(
 
 }
 
-fun Routing.getEvents(eventService: EventService){
+fun Routing.getEvents(eventService: PlanService){
     authenticate {
-        get("/api/events/all") {
+        get("/api/plans/all") {
             val events = eventService.getEvents(call.userId)
             call.respond(
                 HttpStatusCode.OK,

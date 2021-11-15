@@ -9,8 +9,8 @@ import com.example.data.repository.like.LikeRepository
 import com.example.data.repository.like.LikeRepositoryImpl
 import com.example.data.repository.post.PostRepository
 import com.example.data.repository.post.PostRepositoryImpl
-import com.example.data.repository.event.EventRepository
-import com.example.data.repository.event.EventRepositoryImpl
+import com.example.data.repository.plan.PlanRepository
+import com.example.data.repository.plan.PlanRepositoryImpl
 import com.example.data.repository.user.UserRepository
 import com.example.data.repository.user.UserRepositoryImp
 import com.example.service.*
@@ -27,8 +27,8 @@ val mainModule = module() {
     single<UserRepository>{
         UserRepositoryImp(get())
     }
-    single<EventRepository>{
-        EventRepositoryImpl(get())
+    single<PlanRepository>{
+        PlanRepositoryImpl(get())
     }
     single<FollowRepository>{
         FollowRepositoryImpl(get())
@@ -43,7 +43,7 @@ val mainModule = module() {
         CommentRepositoryImpl(get())
     }
     single { UserService(get(),get()) }
-    single { EventService(get(),get()) }
+    single { PlanService(get(),get()) }
     single { FollowService(get()) }
     single { PostService(get()) }
     single { LikeService(get()) }

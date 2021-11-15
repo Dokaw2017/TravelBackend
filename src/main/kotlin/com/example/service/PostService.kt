@@ -8,7 +8,8 @@ import com.example.data.request.CreatePostRequest
 class PostService(
     private val repository: PostRepository
 ) {
-    suspend fun createPost(request: CreatePostRequest, userId: String, imageUrl:String):Boolean{
+    suspend fun createPost(request: CreatePostRequest, userId: String):Boolean{
+        //suspend fun createPost(request: CreatePostRequest, userId: String, imageUrl:String):Boolean
         return repository.createPost(
             Post(
                 imageUrl = request.image,

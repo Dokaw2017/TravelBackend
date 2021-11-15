@@ -1,16 +1,18 @@
 package com.example.route
 
-import com.example.Utils.Constants.BASE_URL
+import com.example.Utils.ApiMessages
 import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
 import com.example.Utils.Constants.POST_PICTURE_PATH
 import com.example.Utils.QueryParams
-import com.example.Utils.save
+import com.example.data.request.CreateEventRequest
 import com.example.data.request.CreatePostRequest
 import com.example.data.request.DeletePostRequest
+import com.example.data.request.RegistrationRequest
 import com.example.data.response.ApiResponse
 import com.example.service.CommentService
 import com.example.service.LikeService
 import com.example.service.PostService
+import com.example.service.UserService
 import com.google.gson.Gson
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -48,6 +50,7 @@ fun Route.cratePostRoute(
                     is PartData.FileItem -> {
 
                         fileName ="chebude"
+
                        /* fileNamee = partData.originalFileName as String
                         withContext(Dispatchers.IO){
                             bucket.uploadFromStream(fileNamee,partData.streamProvider())
@@ -67,7 +70,7 @@ fun Route.cratePostRoute(
                 val createPostAcknowledged = postService.createPost(
                     request = request,
                     userId = call.userId,
-                    imageUrl = request.image
+                    //imageUrl = request.image
                 )
 
                 if (createPostAcknowledged) {
@@ -85,6 +88,37 @@ fun Route.cratePostRoute(
         }
 
     }
+}
+
+fun Route.createPost(
+    postService: PostService
+){
+
+    val gson by inject<Gson>()
+
+    authenticate {
+        post("/api/post/createe") {
+
+            val request = call.receiveOrNull<CreatePostRequest>() ?: kotlin.run {
+                call.respond(HttpStatusCode.BadRequest)
+                return@post
+            }
+
+
+            if (request.description.isBlank() || request.image.isBlank()) {
+                call.respond(ApiResponse<Unit>(false, ApiMessages.FIELD_BLANK))
+                return@post
+            }
+
+            postService.createPost(request,call.userId)
+
+            call.respond(
+                ApiResponse<Unit>(true, "successfully saved")
+            )
+        }
+    }
+
+
 }
 
 fun Route.getPostsForFollows(
