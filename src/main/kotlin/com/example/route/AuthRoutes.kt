@@ -89,7 +89,7 @@ fun Routing.loginUser(
                 HttpStatusCode.OK,
                 ApiResponse(
                     true,
-                    data = AuthResponse(token)
+                    data = AuthResponse(userId = user.id,token)
                 )
 
             )
