@@ -205,7 +205,11 @@ fun Route.getPostDetails(
                 return@get
             }
 
-            call.respond(HttpStatusCode.OK,post)
+            call.respond(HttpStatusCode.OK,
+            ApiResponse(
+                success = true,
+                data = post
+            ))
 
         }
     }
