@@ -4,15 +4,12 @@ import com.example.Utils.ApiMessages
 import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
 import com.example.Utils.Constants.POST_PICTURE_PATH
 import com.example.Utils.QueryParams
-import com.example.data.request.CreateEventRequest
 import com.example.data.request.CreatePostRequest
 import com.example.data.request.DeletePostRequest
-import com.example.data.request.RegistrationRequest
 import com.example.data.response.ApiResponse
 import com.example.service.CommentService
 import com.example.service.LikeService
 import com.example.service.PostService
-import com.example.service.UserService
 import com.google.gson.Gson
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -188,5 +185,28 @@ fun Route.getAllPosts(
             posts
         )
 
+    }
+}
+
+
+
+fun Route.getPostDetails(
+    postService: PostService
+){
+    authenticate {
+        get("/api/post/detail"){
+            val postId = call.parameters["postId"] ?: kotlin.run {
+                call.respond(HttpStatusCode.BadRequest)
+                return@get
+            }
+
+            val post = postService.getPost(postId) ?: kotlin.run {
+                call.respond(HttpStatusCode.NotFound)
+                return@get
+            }
+
+            call.respond(HttpStatusCode.OK,post)
+
+        }
     }
 }

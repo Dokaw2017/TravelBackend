@@ -47,6 +47,7 @@ fun Application.configureRouting() {
         deletePost(postService,likeService,commentService)
         getAllPosts(postService)
         createPost(postService)
+        getPostDetails(postService)
 
         //Event Routes
         createEvent(eventService)
