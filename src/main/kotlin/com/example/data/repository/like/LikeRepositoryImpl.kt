@@ -1,6 +1,8 @@
 package com.example.data.repository.like
 
+import com.example.data.models.Comment
 import com.example.data.models.Like
+import com.example.data.models.Post
 import com.example.data.models.User
 import org.litote.kmongo.and
 import org.litote.kmongo.coroutine.CoroutineDatabase
@@ -11,6 +13,8 @@ class LikeRepositoryImpl(
 ):LikeRepository {
     private val likes = db.getCollection<Like>()
     private val users = db.getCollection<User>()
+
+
     override suspend fun likePost(userId: String, postId: String): Boolean {
         val doesUserExist = users.findOneById(userId) != null
 
