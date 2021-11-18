@@ -1,6 +1,6 @@
 package com.example.data.request
 
-data class CreateEventRequest(
+data class CreatePlanRequest(
     val title:String,
     val place:String,
     val date:String,

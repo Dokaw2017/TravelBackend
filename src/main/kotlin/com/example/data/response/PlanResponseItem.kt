@@ -1,6 +1,6 @@
 package com.example.data.response
 
-data class EventResponseItem(
+data class PlanResponseItem(
     val userId:String,
     val username:String,
     val profileImageUrl:String,

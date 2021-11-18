@@ -3,16 +3,16 @@ package com.example.service
 import com.example.data.models.Plan
 import com.example.data.repository.plan.PlanRepository
 import com.example.data.repository.user.UserRepository
-import com.example.data.request.CreateEventRequest
-import com.example.data.response.EventResponseItem
+import com.example.data.request.CreatePlanRequest
+import com.example.data.response.PlanResponseItem
 
 class PlanService(
-    private val sportPlanRepository: PlanRepository,
+    private val planRepository: PlanRepository,
     private val userRepository: UserRepository
 ) {
 
-    suspend fun createEvent(request:CreateEventRequest,userId:String):Boolean{
-        return sportPlanRepository.createEvent(
+    suspend fun createEvent(request:CreatePlanRequest, userId:String):Boolean{
+        return planRepository.createEvent(
             Plan(
                 title = request.title,
                 place = request.place,
@@ -26,25 +26,25 @@ class PlanService(
         )
     }
 
-    suspend fun getEventById(eventId:String):Plan? = sportPlanRepository.getEventById(eventId)
+    suspend fun getEventById(eventId:String):Plan? = planRepository.getEventById(eventId)
 
     suspend fun getEventsByUser(userId: String):List<Plan>{
-        return sportPlanRepository.getEventsByUser(userId)
+        return planRepository.getEventsByUser(userId)
     }
 
-    suspend fun deleteEvent(eventId: String) = sportPlanRepository.deleteEvent(eventId)
+    suspend fun deleteEvent(eventId: String) = planRepository.deleteEvent(eventId)
 
     suspend fun getAllEvents():List<Plan>{
-        return sportPlanRepository.getAllEvents()
+        return planRepository.getAllEvents()
     }
 
-    suspend fun getEvents(userid:String):List<EventResponseItem?>{
+    suspend fun getEvents(userid:String):List<PlanResponseItem?>{
         val user = userRepository.getUserById(userid)
-        val events = sportPlanRepository.getAllEvents()
+        val events = planRepository.getAllEvents()
 
         return events.map { event ->
             user?.let {
-                EventResponseItem(
+                PlanResponseItem(
                     userId = event.userId,
                     username = it.username,
                     profileImageUrl = user.profileImageUrl,

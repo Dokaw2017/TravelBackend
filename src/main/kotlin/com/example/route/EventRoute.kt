@@ -1,7 +1,7 @@
 package com.example.route
 
 import com.example.Utils.ApiMessages
-import com.example.data.request.CreateEventRequest
+import com.example.data.request.CreatePlanRequest
 import com.example.data.response.ApiResponse
 import com.example.service.PlanService
 import com.google.gson.Gson
@@ -22,7 +22,7 @@ fun Route.createEvent(
 
         post("/api/plan/create") {
 
-            val request = call.receiveOrNull<CreateEventRequest>() ?: kotlin.run {
+            val request = call.receiveOrNull<CreatePlanRequest>() ?: kotlin.run {
                 call.respond(HttpStatusCode.BadRequest)
                 return@post
             }
@@ -72,6 +72,7 @@ fun Routing.getAllEvents(
 
 }
 
+/*
 fun Routing.getEvents(eventService: PlanService){
     authenticate {
         get("/api/plans/all") {
@@ -82,4 +83,4 @@ fun Routing.getEvents(eventService: PlanService){
             )
         }
     }
-}
+}*/
