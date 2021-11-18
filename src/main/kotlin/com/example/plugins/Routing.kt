@@ -53,7 +53,6 @@ fun Application.configureRouting() {
         createEvent(eventService)
         getEventsByUser(eventService)
         getAllEvents(eventService)
-        getEvents(eventService)
 
         //Like Route
         likePost(likeService)
