@@ -79,7 +79,7 @@ fun Route.getCommentsForPost(
                 call.respond(HttpStatusCode.BadRequest)
                 return@get
             }
-            val comments = commentService.getCommentsForPost(postId,call.userId)
+            val comments = commentService.getCommentsForPost(postId)
             call.respond(HttpStatusCode.OK,comments)
         }
     }

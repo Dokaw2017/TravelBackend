@@ -13,7 +13,7 @@ class CommentRepositoryImpl(
 ):CommentRepository {
 
    private val comments = db.getCollection<Comment>()
-  private  val likes = db.getCollection<Like>()
+    private  val likes = db.getCollection<Like>()
 
     override suspend fun createComment(comment: Comment) {
         comments.insertOne(comment)
@@ -28,13 +28,14 @@ class CommentRepositoryImpl(
         return comments.deleteMany(Comment::postId eq postId).wasAcknowledged()
     }
 
-    override suspend fun getCommentsForPost(postId: String,ownUserId:String): List<CommentResponse> {
+    override suspend fun getCommentsForPost(postId: String): List<CommentResponse> {
         return comments.find(Comment::postId eq  postId).toList().map{comment ->
             println("USER ID : ${comment.userId}")
+            println("USER ID : ${comment.comment}")
             println("COMMENT ID : ${comment.id}")
             val isLiked = likes.findOne(
                 and(
-                    Like::userId eq ownUserId,
+                    Like::userId eq comment.userId,
                     Like::postId eq comment.id
                 )
             ) != null
