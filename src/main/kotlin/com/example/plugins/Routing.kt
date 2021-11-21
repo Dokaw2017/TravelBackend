@@ -48,6 +48,7 @@ fun Application.configureRouting() {
         getAllPosts(postService)
         createPost(postService)
         getPostDetails(postService)
+        getAllPost(postService,userService)
 
         //Event Routes
         createEvent(eventService)
@@ -55,8 +56,8 @@ fun Application.configureRouting() {
         getAllEvents(eventService)
 
         //Like Route
-        likePost(likeService)
-        unlikePost(likeService)
+        likeParent(likeService)
+        unlikeParent(likeService)
 
         //Comment Route
         createComment(commentService)

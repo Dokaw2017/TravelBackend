@@ -4,3 +4,5 @@ data class CreatePostRequest(
     val description:String,
     val image:String
 )
+//username
+//profileimageUrl

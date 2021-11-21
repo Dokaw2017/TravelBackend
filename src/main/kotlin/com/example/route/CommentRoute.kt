@@ -79,8 +79,10 @@ fun Route.getCommentsForPost(
                 call.respond(HttpStatusCode.BadRequest)
                 return@get
             }
-            val comments = commentService.getCommentsForPost(postId)
+            val comments = commentService.getCommentsForPost(postId,call.userId)
             call.respond(HttpStatusCode.OK,comments)
+            println("Hello : ${comments}")
+
         }
     }
 }
@@ -102,7 +104,7 @@ fun Route.deleteComment(
             }
             val deleted = commentService.deleteComment(request.commentId)
             if (deleted){
-                likeService.deleteLikesForPost(request.commentId)
+                likeService.deleteLikesForParent(request.commentId)
                 call.respond(HttpStatusCode.OK,ApiResponse(true,"",""))
             }else{
                 call.respond(HttpStatusCode.NotFound,ApiResponse(false,"",""))

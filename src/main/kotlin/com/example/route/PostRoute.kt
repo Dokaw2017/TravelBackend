@@ -10,6 +10,7 @@ import com.example.data.response.ApiResponse
 import com.example.service.CommentService
 import com.example.service.LikeService
 import com.example.service.PostService
+import com.example.service.UserService
 import com.google.gson.Gson
 import io.ktor.application.*
 import io.ktor.auth.*
@@ -159,7 +160,7 @@ fun Route.deletePost(
 
             if (post.userId == call.userId){
                 postService.deletePost(request.postId)
-                likeService.deleteLikesForPost(request.postId)
+                likeService.deleteLikesForParent(request.postId)
                 commentService.deleteCommentsForPost(request.postId)
                 call.respond(HttpStatusCode.OK)
             }else{
@@ -210,6 +211,26 @@ fun Route.getPostDetails(
                 success = true,
                 data = post
             ))
+
+        }
+    }
+}
+
+fun Route.getAllPost(
+    postService: PostService,
+    userService: UserService
+){
+    authenticate {
+        get("/api/posts/all"){
+            val userId = call.userId
+            val page = call.parameters[QueryParams.PARAM_PAGE]?.toIntOrNull() ?: 0
+            val pageSize = call.parameters[QueryParams.PARAM_PAGE_SIZE]?.toIntOrNull() ?: DEFAULT_PAGE_SIZE
+
+            val posts = postService.getAllPost(userId,page,pageSize)
+            call.respond(
+                HttpStatusCode.OK,
+                posts
+            )
 
         }
     }

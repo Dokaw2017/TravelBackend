@@ -1,19 +1,41 @@
 package com.example.service
 
+import com.example.data.repository.follow.FollowRepository
 import com.example.data.repository.like.LikeRepository
+import com.example.data.repository.user.UserRepository
+import com.example.data.response.UserResponseItem
 
 class LikeService(
-    private val repository: LikeRepository,
+    private val likeRepository: LikeRepository,
+    private val userRepository: UserRepository,
+    private val followRepository: FollowRepository
 ) {
-    suspend fun likePost(userId:String,postId:String):Boolean{
-        return repository.likePost(userId,postId)
+
+    suspend fun likeParent(userId: String, parentId: String, parentType: Int): Boolean {
+        return likeRepository.likeParent(userId, parentId, parentType)
     }
 
-    suspend fun unLikePost(userId:String,postId:String):Boolean{
-        return repository.unLikePost(userId,postId)
+    suspend fun unlikeParent(userId: String, parentId: String, parentType: Int): Boolean {
+        return likeRepository.unlikeParent(userId, parentId, parentType)
     }
 
-    suspend fun deleteLikesForPost(postId: String){
-        repository.deleteLikesForPost(postId)
+    suspend fun deleteLikesForParent(parentId: String) {
+        likeRepository.deleteLikesForParent(parentId)
+    }
+
+    suspend fun getUsersWhoLikedParent(parentId: String, userId: String): List<UserResponseItem> {
+        val userIds = likeRepository.getLikesForParent(parentId).map { it.userId }
+        val users = userRepository.getUsers(userIds)
+        val followsByUser = followRepository.getFollowsByUser(userId)
+        return users.map { user ->
+            val isFollowing = followsByUser.find { it.followedUserId == user.id } != null
+            UserResponseItem(
+                userId = user.id,
+                username = user.username,
+                profilePictureUrl = user.profileImageUrl,
+                bio = user.bio,
+                isFollowing = isFollowing
+            )
+        }
     }
 }
