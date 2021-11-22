@@ -10,8 +10,8 @@ class PlanRepositoryImpl(
 
     private val plans = db.getCollection<Plan>()
 
-    override suspend fun createEvent(sportPlan: Plan): Boolean {
-         return plans.insertOne(sportPlan).wasAcknowledged()
+    override suspend fun createEvent(plan: Plan): Boolean {
+         return plans.insertOne(plan).wasAcknowledged()
     }
 
     override suspend fun getEventById(eventId: String): Plan? {

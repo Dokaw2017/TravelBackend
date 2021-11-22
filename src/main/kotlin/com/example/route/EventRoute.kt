@@ -28,7 +28,7 @@ fun Route.createEvent(
             }
 
 
-            if (request.title.isBlank() || request.place.isBlank()) {
+            if (request.title.isBlank() || request.from.isBlank()) {
                 call.respond(ApiResponse<Unit>(false, ApiMessages.FIELD_BLANK))
                 return@post
             }

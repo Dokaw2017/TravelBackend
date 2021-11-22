@@ -37,7 +37,16 @@ class PostRepositoryImpl(
     }
 
 
-    override suspend fun getPost(userId:String,postId: String): PostResponsee? {
+    override suspend fun getPost(postId: String): Post? {
+            return posts.findOneById(postId)
+    }
+
+    override suspend fun getAllPosts(page: Int, pageSize: Int): List<Post> {
+
+        return posts.find().skip(page * pageSize).limit(pageSize).descendingSort(Post::timestamp).toList()
+    }
+
+    override suspend fun getPostDetails(postId: String, userId: String): PostResponsee? {
         val isLiked = likes.findOne(Like::userId eq userId) != null
         val post = posts.findOneById(postId) ?: return null
         val user = users.findOneById(userId) ?: return null
@@ -54,11 +63,7 @@ class PostRepositoryImpl(
         )
     }
 
-    override suspend fun getAllPosts(page: Int, pageSize: Int): List<Post> {
-        return posts.find().skip(page * pageSize).limit(pageSize).descendingSort(Post::timestamp).toList()
-    }
-
-   /* override suspend fun getAllPost(page: Int, pageSize: Int): List<PostResponse> {
+    /* override suspend fun getAllPost(page: Int, pageSize: Int): List<PostResponse> {
        val post = posts.findOne()
         val user = users.findOne()
 

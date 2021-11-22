@@ -4,7 +4,7 @@ import com.example.data.models.Plan
 
 interface PlanRepository {
 
-    suspend fun createEvent(sportPlan:Plan):Boolean
+    suspend fun createEvent(plan:Plan):Boolean
 
     suspend fun getEventById(eventId:String):Plan?
 

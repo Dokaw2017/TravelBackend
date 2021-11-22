@@ -152,7 +152,7 @@ fun Route.deletePost(
                 return@delete
             }
 
-            val post = postService.getPost(request.postId,call.userId)
+            val post = postService.getPost(request.postId)
             if (post == null){
                 call.respond(HttpStatusCode.NotFound)
                 return@delete
@@ -201,7 +201,7 @@ fun Route.getPostDetails(
                 return@get
             }
 
-            val post = postService.getPost(postId,call.userId) ?: kotlin.run {
+            val post = postService.getPostDetails(postId,call.userId) ?: kotlin.run {
                 call.respond(HttpStatusCode.NotFound)
                 return@get
             }

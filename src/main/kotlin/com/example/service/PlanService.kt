@@ -15,7 +15,8 @@ class PlanService(
         return planRepository.createEvent(
             Plan(
                 title = request.title,
-                place = request.place,
+                from = request.from,
+                to = request.to,
                 userId = userId,
                 date = request.date,
                 time = request.time,
@@ -48,7 +49,8 @@ class PlanService(
                     userId = event.userId,
                     username = it.username,
                     profileImageUrl = user.profileImageUrl,
-                    place = event.place,
+                    from = event.from,
+                    to = event.to,
                     time = event.time,
                     date = event.date,
                     isBuddy = event.isBuddy

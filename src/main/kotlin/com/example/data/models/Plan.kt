@@ -6,7 +6,8 @@ import org.bson.types.ObjectId
 
 data class Plan (
     val title:String,
-    val place:String,
+    val from:String,
+    val to:String,
     val date:String,
     val userId:String,
     val time: String,
