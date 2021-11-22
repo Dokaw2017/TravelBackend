@@ -3,6 +3,7 @@ package com.example.data.repository.post
 import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
 import com.example.data.models.Post
 import com.example.data.response.PostResponse
+import com.example.data.response.PostResponsee
 
 interface PostRepository {
 
@@ -20,7 +21,7 @@ interface PostRepository {
         page:Int = 0,
         pageSize:Int,):List<Post>
 
-    suspend fun getPost(postId: String):Post?
+    suspend fun getPost(postId: String,userId: String):PostResponsee?
 
     suspend fun getAllPosts( page:Int = 0,
                              pageSize:Int = DEFAULT_PAGE_SIZE):List<Post>

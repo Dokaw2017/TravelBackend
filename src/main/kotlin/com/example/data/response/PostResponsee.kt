@@ -1,13 +1,13 @@
 package com.example.data.response
 
-data class PostResponse(
+data class PostResponsee(
     val id:String,
-    val imageUrl:String,
     val userId:String,
+    val imageUrl:String,
     val username:String,
-    val profileImageUrl:String,
-    val timestamp:Long,
+    val profilePictureUrl:String,
     val description:String,
     val likeCount:Int = 0,
     val commentCount:Int = 0,
+    val isLike:Boolean
 )

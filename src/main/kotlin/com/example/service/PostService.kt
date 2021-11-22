@@ -6,6 +6,7 @@ import com.example.data.repository.post.PostRepository
 import com.example.data.repository.user.UserRepository
 import com.example.data.request.CreatePostRequest
 import com.example.data.response.PostResponse
+import com.example.data.response.PostResponsee
 
 class PostService(
     private val repository: PostRepository,
@@ -43,7 +44,9 @@ class PostService(
         return repository.getPostsForProfile(userId,page,pageSize)
     }
 
-    suspend fun getPost(postId:String): Post? = repository.getPost(postId)
+    suspend fun getPost(userId:String,postId:String): PostResponsee? {
+        return repository.getPost(postId,userId)
+    }
 
     suspend fun getAllPosts(page:Int = 0,
                             pageSize:Int = DEFAULT_PAGE_SIZE):List<Post>{
@@ -59,6 +62,7 @@ class PostService(
         return posts.map { post ->
             user?.let {
                 PostResponse(
+                    id = post.id,
                     imageUrl = post.imageUrl,
                     userId = user.id,
                     username = user.username,
