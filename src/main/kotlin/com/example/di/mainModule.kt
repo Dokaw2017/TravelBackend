@@ -1,6 +1,8 @@
 package com.example.di
 
 import com.example.Utils.Constants.DATABASE_NAME
+import com.example.data.repository.chat.ChatRepository
+import com.example.data.repository.chat.ChatRepositoryImpl
 import com.example.data.repository.comment.CommentRepository
 import com.example.data.repository.comment.CommentRepositoryImpl
 import com.example.data.repository.follow.FollowRepository
@@ -42,12 +44,16 @@ val mainModule = module() {
     single<CommentRepository>{
         CommentRepositoryImpl(get())
     }
+    single<ChatRepository>{
+        ChatRepositoryImpl(get())
+    }
     single { UserService(get(),get()) }
     single { PlanService(get(),get()) }
     single { FollowService(get()) }
     single { PostService(get(),get()) }
     single { LikeService(get(),get(),get()) }
     single { CommentService(get(),get()) }
+    single { ChatService(get()) }
 
     single { Gson() }
 }

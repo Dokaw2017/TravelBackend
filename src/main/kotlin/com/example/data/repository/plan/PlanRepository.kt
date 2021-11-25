@@ -16,4 +16,6 @@ interface PlanRepository {
 
     suspend fun deleteEvent(eventId:String)
 
+    suspend fun filterPlan(category: String?,subCategory:String?):List<Plan>
+
 }

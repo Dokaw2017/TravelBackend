@@ -1,6 +1,8 @@
 package com.example.route
 
 import com.example.Utils.ApiMessages
+import com.example.Utils.QueryParams
+import com.example.Utils.QueryParams.PARAM_SUB_CATEGORY_TYPE
 import com.example.data.request.CreatePlanRequest
 import com.example.data.response.ApiResponse
 import com.example.service.PlanService
@@ -44,31 +46,49 @@ fun Route.createEvent(
 
 fun Routing.getEventsByUser(
     eventService: PlanService,
-){
+) {
 
-authenticate {
-    get("/api/plan/get") {
+    authenticate {
+        get("/api/plan/get") {
 
-        val posts = eventService.getEventsByUser(call.userId)
-        call.respond(
-            HttpStatusCode.OK,
-            posts
-        )
-    }
-}
-}
-
-fun Routing.getAllEvents(
-    eventService: PlanService
-){
-
-        get("/api/plan/all") {
-            val posts = eventService.getAllEvents()
+            val posts = eventService.getEventsByUser(call.userId)
             call.respond(
                 HttpStatusCode.OK,
                 posts
             )
         }
+    }
+}
+
+fun Route.filterPlan(
+    eventService: PlanService
+) {
+    authenticate {
+        get("/api/plan/filter") {
+            val category = call.parameters[QueryParams.PARAM_CATEGORY_TYPE]
+            val subCategory = call.parameters[PARAM_SUB_CATEGORY_TYPE ]
+            println("CATEGORG: ${category}")
+            val posts = eventService.filterPlan(category,subCategory)
+            println("POST: ${posts}")
+            call.respond(
+                HttpStatusCode.OK,
+                posts
+            )
+        }
+    }
+}
+
+fun Routing.getAllEvents(
+    eventService: PlanService
+) {
+
+    get("/api/plan/all") {
+        val posts = eventService.getAllEvents()
+        call.respond(
+            HttpStatusCode.OK,
+            posts
+        )
+    }
 
 }
 

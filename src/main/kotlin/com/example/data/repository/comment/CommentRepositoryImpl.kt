@@ -29,6 +29,7 @@ class CommentRepositoryImpl(
     }
 
     override suspend fun getCommentsForPost(postId: String,ownUserId:String): List<CommentResponse> {
+
         return comments.find(Comment::postId eq  postId).toList().map{comment ->
             println("USER ID : ${comment.userId}")
             println("USER ID : ${comment.comment}")

@@ -9,6 +9,7 @@ object Constants {
     const val POST_PICTURE_PATHH = "build/resources/main/static/post_pictures/"
     const val BANNER_IMAGE_PATH = "build/resources/main/static/banner_images/"
     const val DEFAULT_PAGE_SIZE = 15
+
     const val USER_NOT_FOUND = "The user couldn't be found"
     const val DEFAULT_ACTIVITY_PAGE_SIZE = 20
 }

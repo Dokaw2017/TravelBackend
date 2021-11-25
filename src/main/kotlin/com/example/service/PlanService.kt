@@ -59,4 +59,8 @@ class PlanService(
         }
 
     }
+
+    suspend fun filterPlan(category: String?,subCategory:String?):List<Plan>{
+        return planRepository.filterPlan(category,subCategory)
+    }
 }
