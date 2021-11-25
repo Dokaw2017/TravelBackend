@@ -12,14 +12,15 @@ class PlanService(
 ) {
 
     suspend fun createEvent(request: CreatePlanRequest, userId: String): Boolean {
+        val user = userRepository.getUserById(userId) ?: return false
         return planRepository.createEvent(
             Plan(
                 title = request.title,
                 from = request.from,
                 to = request.to,
                 userId = userId,
-                username= request.username,
-                profilePictureUrl = request.profilePictureUrl,
+                username= user.username,
+                profilePictureUrl = user.profileImageUrl,
                 date = request.date,
                 time = request.time,
                 category = request.category,

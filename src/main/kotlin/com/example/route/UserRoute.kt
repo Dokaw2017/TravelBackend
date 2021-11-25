@@ -1,5 +1,6 @@
 package com.example.route
 
+import com.example.Utils.ApiMessages
 import com.example.Utils.Constants.BANNER_IMAGE_PATH
 import com.example.data.request.UpdateProfileRequest
 import com.example.Utils.Constants.BASE_URL
@@ -8,6 +9,7 @@ import com.example.Utils.Constants.PROFILE_PICTURE_PATH
 import com.example.Utils.Constants.USER_NOT_FOUND
 import com.example.Utils.QueryParams
 import com.example.Utils.save
+import com.example.data.request.CreatePostRequest
 import com.example.data.response.ApiResponse
 import com.example.service.PostService
 import com.example.service.UserService
@@ -89,7 +91,7 @@ fun Route.general(){
 
 
 
-fun Route.updateUserProfile(
+/*fun Route.updateUserProfile(
     userService: UserService
 ) {
     val gson: Gson by inject()
@@ -121,12 +123,12 @@ fun Route.updateUserProfile(
                             bannerPictureFilename = partData.save(BANNER_IMAGE_PATH)
                         }
 
-                        /*val fileBytes = partData.streamProvider().readBytes()
+                        *//*val fileBytes = partData.streamProvider().readBytes()
                         val fileExtension = partData.originalFileName?.takeLastWhile { it != '.' }
                         fileName = UUID.randomUUID().toString() + "." + fileExtension
 
                         File("${PROFILE_PICTURE_PATH}$fileName").writeBytes(fileBytes)
-                        //fileName = partData.save(PROFILE_PICTURE_PATH)*/
+                        //fileName = partData.save(PROFILE_PICTURE_PATH)*//*
 
                     }
                     is PartData.BinaryItem -> Unit
@@ -167,6 +169,37 @@ fun Route.updateUserProfile(
         }
 
     }
+}*/
+
+fun Route.updateProfile(
+    userService: UserService
+){
+
+    val gson by inject<Gson>()
+
+    authenticate {
+        post("/api/user/updatee") {
+
+            val request = call.receiveOrNull<UpdateProfileRequest>() ?: kotlin.run {
+                call.respond(HttpStatusCode.BadRequest)
+                return@post
+            }
+
+
+            if (request.username.isBlank() || request.bio.isBlank()) {
+                call.respond(ApiResponse<Unit>(false, ApiMessages.FIELD_BLANK))
+                return@post
+            }
+
+            userService.updateUser(call.userId, request)
+
+            call.respond(
+                ApiResponse<Unit>(true, "successfully saved")
+            )
+        }
+    }
+
+
 }
 
 fun Route.getMyProfile(userService: UserService){

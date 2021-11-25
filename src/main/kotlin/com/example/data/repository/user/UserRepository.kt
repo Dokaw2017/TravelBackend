@@ -14,10 +14,15 @@ interface UserRepository {
 
     /*suspend fun getMyProfile(userId: String):ProfileResponse?
 */
-    suspend fun updateUser(
+   /* suspend fun updateUser(
         userId: String,
         profileImageUrl:String,
-        bannerImageUrl:String,
+        bannerImageUrl: String?,
+        updateProfileRequest: UpdateProfileRequest
+    ):Boolean
+*/
+    suspend fun updateUser(
+        userId: String,
         updateProfileRequest: UpdateProfileRequest
     ):Boolean
 

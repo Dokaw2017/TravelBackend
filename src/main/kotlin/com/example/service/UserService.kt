@@ -7,7 +7,6 @@ import com.example.data.repository.user.UserRepository
 import com.example.data.request.RegistrationRequest
 import com.example.data.response.ProfileResponse
 import com.example.data.response.ProfileResponse2
-import java.util.*
 
 class UserService(
     private val userRepository: UserRepository,
@@ -94,10 +93,17 @@ class UserService(
 
     suspend fun updateUser(
         userId: String,
+        updateProfileRequest: UpdateProfileRequest
+    ):Boolean{
+        return userRepository.updateUser(userId,updateProfileRequest)
+    }
+/*
+    suspend fun updateUser(
+        userId: String,
         profileImageUrl:String,
-        bannerImageUrl:String,
+        bannerImageUrl:String?,
         updateProfileRequest: UpdateProfileRequest
     ):Boolean{
         return userRepository.updateUser(userId,profileImageUrl,bannerImageUrl,updateProfileRequest)
-    }
+    }*/
 }

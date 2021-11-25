@@ -2,7 +2,6 @@ package com.example.data.repository.user
 
 import com.example.data.request.UpdateProfileRequest
 import com.example.data.models.User
-import com.example.data.response.ProfileResponse
 import org.litote.kmongo.`in`
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
@@ -32,8 +31,41 @@ class UserRepositoryImp(
 
     override suspend fun updateUser(
         userId: String,
+        updateProfileRequest: UpdateProfileRequest
+    ): Boolean {
+        val user = getUserById(userId) ?: return false
+        return users.updateOneById(
+            id = userId,
+            update = User(
+                username = updateProfileRequest.username,
+                password = user.password,
+                profileImageUrl = updateProfileRequest.profileImageUrl,
+                firstName = "",
+                lastname = "",
+                email = user.email,
+                bannerImageUrl = updateProfileRequest.bannerImageUrl ?: "",
+                phoneNumber = 0,
+                gender = user.gender,
+                location = "",
+                hobbies = updateProfileRequest.hobbies,
+                birthDay = "",
+                buddyId = listOf("","",""),
+                inviteId = listOf("","",""),
+                friendsId = "",
+                bio = updateProfileRequest.bio,
+                followerCount = 7,
+                followingCount = 4,
+                postCount = 5,
+                chatGroupId = listOf("","",""),
+                id = userId
+            )
+        ).wasAcknowledged()
+    }
+
+   /* override suspend fun updateUser(
+        userId: String,
         profileImageUrl:String,
-        bannerImageUrl:String,
+        bannerImageUrl: String?,
         updateProfileRequest: UpdateProfileRequest
     ): Boolean {
         val user = getUserById(userId) ?: return false
@@ -63,7 +95,7 @@ class UserRepositoryImp(
                 id = userId
             )
         ).wasAcknowledged()
-    }
+    }*/
 
     override suspend fun searchForUsers(query: String): List<User> {
         return users.find(User::username regex Regex("(?i).*$query.*")).toList()

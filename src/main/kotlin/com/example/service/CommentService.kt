@@ -2,14 +2,18 @@ package com.example.service
 
 import com.example.Utils.Constants.MAX_COMMENT_LENGTH
 import com.example.data.models.Comment
+import com.example.data.models.Post
 import com.example.data.repository.comment.CommentRepository
+import com.example.data.repository.post.PostRepository
 import com.example.data.repository.user.UserRepository
 import com.example.data.request.CreateCommentRequest
 import com.example.data.response.CommentResponse
+import org.litote.kmongo.setValue
 
 class CommentService(
     private val commentRepository: CommentRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val posts: PostRepository,
 ) {
     suspend fun createComment(createCommentRequest: CreateCommentRequest, userId:String):ValidationEvent{
         createCommentRequest.apply {
@@ -34,6 +38,7 @@ class CommentService(
                 timestamp = System.currentTimeMillis()
             )
         )
+        posts.updateCommentCount(createCommentRequest.postId)
         return ValidationEvent.Success
     }
     suspend fun deleteCommentsForPost(postId: String){

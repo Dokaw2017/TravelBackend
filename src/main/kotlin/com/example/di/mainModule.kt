@@ -52,7 +52,7 @@ val mainModule = module() {
     single { FollowService(get()) }
     single { PostService(get(),get()) }
     single { LikeService(get(),get(),get()) }
-    single { CommentService(get(),get()) }
+    single { CommentService(get(),get(),get()) }
     single { ChatService(get()) }
 
     single { Gson() }

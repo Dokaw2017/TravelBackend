@@ -7,15 +7,16 @@ import com.example.data.response.PostResponse
 import com.example.data.response.PostResponsee
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
+import org.litote.kmongo.setValue
 
 class PostRepositoryImpl(
     db: CoroutineDatabase
-):PostRepository {
-    private val posts = db.getCollection<Post>()
+) : PostRepository {
+     val posts = db.getCollection<Post>()
     private val users = db.getCollection<User>()
     private val likes = db.getCollection<Like>()
 
-    override suspend fun createPost(post: Post):Boolean {
+    override suspend fun createPost(post: Post): Boolean {
         return posts.insertOne(post).wasAcknowledged()
     }
 
@@ -38,7 +39,7 @@ class PostRepositoryImpl(
 
 
     override suspend fun getPost(postId: String): Post? {
-            return posts.findOneById(postId)
+        return posts.findOneById(postId)
     }
 
     override suspend fun getAllPosts(page: Int, pageSize: Int): List<Post> {
@@ -63,23 +64,12 @@ class PostRepositoryImpl(
         )
     }
 
-    /* override suspend fun getAllPost(page: Int, pageSize: Int): List<PostResponse> {
-       val post = posts.findOne()
-        val user = users.findOne()
-
-        val result =  post?.let {
-            PostResponse(
-                imageUrl = it.imageUrl,
-                userId = user!!.id,
-                username = user.username,
-                profileImageUrl = user.profileImageUrl,
-                timestamp = it.timestamp,
-                description = it.description,
-                likeCount = it.likeCount,
-                commentCount = it.commentCount
-            )
-        }
-
-        return result
-    }*/
+    override suspend fun updateCommentCount(postId: String): Boolean {
+        val post = posts.findOneById(postId) ?: return false
+        posts.updateOneById(
+            id = postId,
+            update = setValue(Post::commentCount, (post.commentCount + 1).coerceAtLeast(0))
+        )
+        return true
+    }
 }

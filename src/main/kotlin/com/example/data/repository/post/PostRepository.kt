@@ -2,7 +2,6 @@ package com.example.data.repository.post
 
 import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
 import com.example.data.models.Post
-import com.example.data.response.PostResponse
 import com.example.data.response.PostResponsee
 
 interface PostRepository {
@@ -28,8 +27,7 @@ interface PostRepository {
     suspend fun getAllPosts( page:Int = 0,
                              pageSize:Int = DEFAULT_PAGE_SIZE):List<Post>
 
-   /* suspend fun getAllPost(page:Int = 0,
-                           pageSize:Int = DEFAULT_PAGE_SIZE):List<PostResponse>*/
+    suspend fun updateCommentCount(postId:String):Boolean
 
 
 }
