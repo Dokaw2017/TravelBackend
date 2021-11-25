@@ -92,15 +92,3 @@ fun Routing.getAllEvents(
 
 }
 
-/*
-fun Routing.getEvents(eventService: PlanService){
-    authenticate {
-        get("/api/plans/all") {
-            val events = eventService.getEvents(call.userId)
-            call.respond(
-                HttpStatusCode.OK,
-                events
-            )
-        }
-    }
-}*/
