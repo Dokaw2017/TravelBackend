@@ -50,7 +50,7 @@ fun Application.configureRouting() {
         getAllPosts(postService)
         createPost(postService)
         getPostDetails(postService)
-        getAllPost(postService,userService)
+        //getAllPost(postService,userService)
 
         //Event Routes
         createEvent(eventService)

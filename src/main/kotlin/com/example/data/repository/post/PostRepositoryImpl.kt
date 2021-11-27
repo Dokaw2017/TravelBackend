@@ -1,6 +1,7 @@
 package com.example.data.repository.post
 
 import com.example.data.models.Like
+import com.example.data.models.Plan
 import com.example.data.models.Post
 import com.example.data.models.User
 import com.example.data.response.PostResponse
@@ -12,7 +13,7 @@ import org.litote.kmongo.setValue
 class PostRepositoryImpl(
     db: CoroutineDatabase
 ) : PostRepository {
-     val posts = db.getCollection<Post>()
+    val posts = db.getCollection<Post>()
     private val users = db.getCollection<User>()
     private val likes = db.getCollection<Like>()
 
@@ -42,9 +43,14 @@ class PostRepositoryImpl(
         return posts.findOneById(postId)
     }
 
-    override suspend fun getAllPosts(page: Int, pageSize: Int): List<Post> {
+    override suspend fun getAllPosts(page: Int, pageSize: Int, isImage: Boolean): List<Post> {
+        when (isImage) {
+            true -> return posts.find(Post::isImage eq true).skip(page * pageSize).limit(pageSize)
+                .descendingSort(Post::timestamp).toList()
+            false -> return posts.find(Post::isImage eq false).skip(page * pageSize).limit(pageSize)
+                .descendingSort(Post::timestamp).toList()
+        }
 
-        return posts.find().skip(page * pageSize).limit(pageSize).descendingSort(Post::timestamp).toList()
     }
 
     override suspend fun getPostDetails(postId: String, userId: String): PostResponsee? {

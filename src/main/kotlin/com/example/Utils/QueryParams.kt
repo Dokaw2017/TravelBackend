@@ -7,6 +7,7 @@ object QueryParams {
     const val PARAM_QUERY = "query"
     const val PARAM_CHAT_ID = "chatId"
     const val PARAM_USER_ID = "userId"
+    const val PARAM_POST_TYPE = "postType"
     const val PARAM_PARENT_ID = "parentId"
     const val PARAM_PARENT_TYPE = "parentType"
     const val PARAM_CATEGORY_TYPE = "category"

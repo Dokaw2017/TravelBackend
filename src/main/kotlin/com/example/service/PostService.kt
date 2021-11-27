@@ -53,12 +53,12 @@ class PostService(
     }
 
     suspend fun getAllPosts(page:Int = 0,
-                            pageSize:Int = DEFAULT_PAGE_SIZE):List<Post>{
-        return repository.getAllPosts(page,pageSize)
+                            pageSize:Int = DEFAULT_PAGE_SIZE,isImage: Boolean):List<Post>{
+        return repository.getAllPosts(page,pageSize, isImage)
     }
 
-    suspend fun getAllPost(userId: String,page:Int = 0,
-                           pageSize:Int = DEFAULT_PAGE_SIZE):List<PostResponse?>{
+   /* suspend fun getAllPost(userId: String,page:Int = 0,
+                           pageSize:Int = DEFAULT_PAGE_SIZE,isImage:Boolean):List<PostResponse?>{
 
         val user = userRepository.getUserById(userId)
         val posts = repository.getAllPosts()
@@ -80,7 +80,7 @@ class PostService(
                 )
             }
         }
-    }
+    }*/
 
     suspend fun getPostDetails(ownUserId:String,postId:String):PostResponsee?{
         return repository.getPostDetails(ownUserId,postId)

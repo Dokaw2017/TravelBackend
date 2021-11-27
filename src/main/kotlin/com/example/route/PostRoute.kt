@@ -179,13 +179,13 @@ fun Route.getAllPosts(
 
         val page = call.parameters[QueryParams.PARAM_PAGE]?.toIntOrNull() ?: 0
         val pageSize = call.parameters[QueryParams.PARAM_PAGE_SIZE]?.toIntOrNull() ?: DEFAULT_PAGE_SIZE
+        val isImage = call.parameters[QueryParams.PARAM_POST_TYPE]?.toBoolean() ?: true
 
-        val posts = postService.getAllPosts(page,pageSize)
+        val posts = postService.getAllPosts(page,pageSize,isImage)
         call.respond(
             HttpStatusCode.OK,
             posts
         )
-
     }
 }
 
@@ -216,6 +216,7 @@ fun Route.getPostDetails(
     }
 }
 
+/*
 fun Route.getAllPost(
     postService: PostService,
     userService: UserService
@@ -225,8 +226,10 @@ fun Route.getAllPost(
             val userId = call.userId
             val page = call.parameters[QueryParams.PARAM_PAGE]?.toIntOrNull() ?: 0
             val pageSize = call.parameters[QueryParams.PARAM_PAGE_SIZE]?.toIntOrNull() ?: DEFAULT_PAGE_SIZE
+            val isImage = call.parameters[QueryParams.PARAM_POST_TYPE]?.toBoolean() ?: true
 
-            val posts = postService.getAllPost(userId,page,pageSize)
+            val posts = postService.getAllPost(userId,page,pageSize,isImage)
+
             call.respond(
                 HttpStatusCode.OK,
                 posts
@@ -234,4 +237,4 @@ fun Route.getAllPost(
 
         }
     }
-}
+}*/

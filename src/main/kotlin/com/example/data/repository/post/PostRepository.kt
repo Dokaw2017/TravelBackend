@@ -25,7 +25,7 @@ interface PostRepository {
     suspend fun getPostDetails(postId: String,userId: String):PostResponsee?
 
     suspend fun getAllPosts( page:Int = 0,
-                             pageSize:Int = DEFAULT_PAGE_SIZE):List<Post>
+                             pageSize:Int = DEFAULT_PAGE_SIZE,isImage:Boolean):List<Post>
 
     suspend fun updateCommentCount(postId:String):Boolean
 

@@ -12,6 +12,7 @@ data class Post(
     val description:String,
     val likeCount:Int = 0,
     val commentCount:Int = 0,
+    val isImage:Boolean = true,
     @BsonId
     val id:String = ObjectId().toString(),
 )
