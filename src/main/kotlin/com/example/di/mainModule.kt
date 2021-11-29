@@ -1,6 +1,9 @@
 package com.example.di
 
-import com.example.Utils.Constants.DATABASE_NAME
+import com.example.data.models.Chat
+import com.example.data.models.Message
+import com.example.data.models.SimpleUser
+import com.example.utils.Constants.DATABASE_NAME
 import com.example.data.repository.chat.ChatRepository
 import com.example.data.repository.chat.ChatRepositoryImpl
 import com.example.data.repository.comment.CommentRepository
@@ -16,7 +19,11 @@ import com.example.data.repository.plan.PlanRepositoryImpl
 import com.example.data.repository.user.UserRepository
 import com.example.data.repository.user.UserRepositoryImp
 import com.example.service.*
+import com.example.service.chat.ChatController
+import com.example.service.chat.ChatService
 import com.google.gson.Gson
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import org.koin.dsl.module
@@ -56,4 +63,5 @@ val mainModule = module() {
     single { ChatService(get()) }
 
     single { Gson() }
+    single { ChatController(get()) }
 }

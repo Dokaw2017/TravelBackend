@@ -1,12 +1,10 @@
 package com.example.service
 
-import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
+import com.example.utils.Constants.DEFAULT_PAGE_SIZE
 import com.example.data.models.Post
-import com.example.data.models.User
 import com.example.data.repository.post.PostRepository
 import com.example.data.repository.user.UserRepository
 import com.example.data.request.CreatePostRequest
-import com.example.data.response.PostResponse
 import com.example.data.response.PostResponsee
 
 class PostService(

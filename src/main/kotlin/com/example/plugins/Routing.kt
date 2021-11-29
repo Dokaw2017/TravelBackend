@@ -4,6 +4,8 @@ import com.example.route.*
 import com.example.service.*
 import com.example.service.PlanService
 import com.example.service.UserService
+import com.example.service.chat.ChatController
+import com.example.service.chat.ChatService
 import io.ktor.routing.*
 import io.ktor.http.content.*
 import io.ktor.application.*
@@ -18,6 +20,7 @@ fun Application.configureRouting() {
     val likeService: LikeService by inject()
     val commentService: CommentService by inject()
     val chatService: ChatService by inject()
+    val chatController:ChatController by inject()
 
     val jwtIssuer = environment.config.property("jwt.domain").getString()
     val jwtAudience = environment.config.property("jwt.audience").getString()
@@ -71,10 +74,11 @@ fun Application.configureRouting() {
         //Chat Route
         getChatsForUser(chatService)
         getMessagesForChat(chatService)
-        chatWebSocket(chatService)
+        chatWebSocket(chatController)
 
         static{
             resources("static")
         }
     }
+
 }

@@ -1,8 +1,8 @@
 package com.example.route
 
-import com.example.Utils.ApiMessages
-import com.example.Utils.QueryParams
-import com.example.Utils.QueryParams.PARAM_SUB_CATEGORY_TYPE
+import com.example.utils.ApiMessages
+import com.example.utils.QueryParams
+import com.example.utils.QueryParams.PARAM_SUB_CATEGORY_TYPE
 import com.example.data.request.CreatePlanRequest
 import com.example.data.response.ApiResponse
 import com.example.service.PlanService

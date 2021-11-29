@@ -1,14 +1,12 @@
 package com.example.service
 
-import com.example.Utils.Constants.MAX_COMMENT_LENGTH
+import com.example.utils.Constants.MAX_COMMENT_LENGTH
 import com.example.data.models.Comment
-import com.example.data.models.Post
 import com.example.data.repository.comment.CommentRepository
 import com.example.data.repository.post.PostRepository
 import com.example.data.repository.user.UserRepository
 import com.example.data.request.CreateCommentRequest
 import com.example.data.response.CommentResponse
-import org.litote.kmongo.setValue
 
 class CommentService(
     private val commentRepository: CommentRepository,

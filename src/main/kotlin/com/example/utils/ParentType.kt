@@ -1,4 +1,4 @@
-package com.example.Utils
+package com.example.utils
 
 sealed class ParentType(val type: Int) {
     object Post : ParentType(0)

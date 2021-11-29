@@ -1,6 +1,6 @@
 package com.example.data.repository.like
 
-import com.example.Utils.Constants.DEFAULT_ACTIVITY_PAGE_SIZE
+import com.example.utils.Constants.DEFAULT_ACTIVITY_PAGE_SIZE
 import com.example.data.models.Like
 
 interface LikeRepository {

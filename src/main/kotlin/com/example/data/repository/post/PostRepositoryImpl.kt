@@ -1,10 +1,8 @@
 package com.example.data.repository.post
 
 import com.example.data.models.Like
-import com.example.data.models.Plan
 import com.example.data.models.Post
 import com.example.data.models.User
-import com.example.data.response.PostResponse
 import com.example.data.response.PostResponsee
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq

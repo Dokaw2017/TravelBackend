@@ -1,4 +1,4 @@
-package com.example.service
+package com.example.service.chat
 
 import com.example.data.models.Chat
 import com.example.data.models.Message

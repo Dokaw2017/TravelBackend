@@ -1,6 +1,6 @@
 package com.example.data.repository.like
 
-import com.example.Utils.ParentType
+import com.example.utils.ParentType
 import com.example.data.models.Comment
 import com.example.data.models.Like
 import com.example.data.models.Post

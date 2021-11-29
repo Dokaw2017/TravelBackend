@@ -1,4 +1,4 @@
-package com.example.Utils
+package com.example.utils
 
 object QueryParams {
     const val PARAM_PAGE = "page"

@@ -31,6 +31,7 @@ repositories {
 dependencies {
     implementation("io.ktor:ktor-server-core:$ktor_version")
     implementation("io.ktor:ktor-websockets:$ktor_version")
+    implementation("io.ktor:ktor-server-sessions:$ktor_version")
     implementation("io.ktor:ktor-gson:$ktor_version")
     implementation("io.ktor:ktor-server-host-common:$ktor_version")
     implementation("io.ktor:ktor-auth:$ktor_version")
@@ -53,7 +54,7 @@ dependencies {
     //Test Dependencies
 
     //gson
-    testImplementation("com.google.code.gson:gson:2.8.8")
+    testImplementation("com.google.code.gson:gson:2.8.9")
     //Koin
     testImplementation ("io.insert-koin:koin-test:$koin_version")
     //Ktor test

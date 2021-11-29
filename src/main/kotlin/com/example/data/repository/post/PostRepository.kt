@@ -1,6 +1,6 @@
 package com.example.data.repository.post
 
-import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
+import com.example.utils.Constants.DEFAULT_PAGE_SIZE
 import com.example.data.models.Post
 import com.example.data.response.PostResponsee
 

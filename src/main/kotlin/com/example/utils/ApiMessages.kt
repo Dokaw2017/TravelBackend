@@ -1,6 +1,6 @@
-package com.example.Utils
+package com.example.utils
 
-import com.example.Utils.Constants.MAX_COMMENT_LENGTH
+import com.example.utils.Constants.MAX_COMMENT_LENGTH
 
 object ApiMessages {
     const val USER_ALREADY_EXISTS = "A user with this email already exists"

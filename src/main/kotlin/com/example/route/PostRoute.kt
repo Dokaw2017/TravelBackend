@@ -1,16 +1,15 @@
 package com.example.route
 
-import com.example.Utils.ApiMessages
-import com.example.Utils.Constants.DEFAULT_PAGE_SIZE
-import com.example.Utils.Constants.POST_PICTURE_PATH
-import com.example.Utils.QueryParams
+import com.example.utils.ApiMessages
+import com.example.utils.Constants.DEFAULT_PAGE_SIZE
+import com.example.utils.Constants.POST_PICTURE_PATH
+import com.example.utils.QueryParams
 import com.example.data.request.CreatePostRequest
 import com.example.data.request.DeletePostRequest
 import com.example.data.response.ApiResponse
 import com.example.service.CommentService
 import com.example.service.LikeService
 import com.example.service.PostService
-import com.example.service.UserService
 import com.google.gson.Gson
 import io.ktor.application.*
 import io.ktor.auth.*

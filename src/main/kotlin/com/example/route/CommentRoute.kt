@@ -1,8 +1,8 @@
 package com.example.route
 
-import com.example.Utils.ApiMessages.COMMENT_TOO_LONG
-import com.example.Utils.ApiMessages.FIELD_BLANK
-import com.example.Utils.QueryParams
+import com.example.utils.ApiMessages.COMMENT_TOO_LONG
+import com.example.utils.ApiMessages.FIELD_BLANK
+import com.example.utils.QueryParams
 import com.example.data.request.CreateCommentRequest
 import com.example.data.request.DeleteCommentRequest
 import com.example.data.response.ApiResponse

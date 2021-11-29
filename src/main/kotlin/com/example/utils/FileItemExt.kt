@@ -1,4 +1,4 @@
-package com.example.Utils
+package com.example.utils
 
 import io.ktor.http.content.*
 import java.io.File
