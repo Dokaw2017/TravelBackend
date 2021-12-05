@@ -1,9 +1,7 @@
 package com.example.service.chat
 
-import com.example.data.models.Chat
-import com.example.data.models.Message
 import com.example.data.repository.chat.ChatRepository
-import com.example.data.websocket.WsMessage
+import com.example.data.websocket.WsServerMessage
 import io.ktor.http.cio.websocket.*
 import java.util.concurrent.ConcurrentHashMap
 
@@ -23,13 +21,13 @@ class ChatController(
         }
     }
 
-    suspend fun sendMessage(json:String,message: WsMessage){
-        onlineUsers[message.toId]?.send(Frame.Text(json))
-        onlineUsers[message.fromId]?.send(Frame.Text(json))
+    suspend fun sendMessage(frameText:String,message: WsServerMessage){
+        onlineUsers[message.toId]?.send(Frame.Text(frameText))
+        onlineUsers[message.fromId]?.send(Frame.Text(frameText))
 
         val messageEntity = message.toMessage()
 
-        repository.insertMessage(message.toMessage())
+        repository.insertMessage(messageEntity)
 
         if (!repository.doesChatWithUserExist(message.fromId,message.toId)){
             repository.insertChat(message.fromId,message.toId,messageEntity.id

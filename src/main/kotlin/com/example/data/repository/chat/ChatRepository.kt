@@ -1,7 +1,7 @@
 package com.example.data.repository.chat
 
-import com.example.data.models.Chat
 import com.example.data.models.Message
+import com.example.data.response.ChatResponse
 
 interface ChatRepository {
 
@@ -9,7 +9,7 @@ interface ChatRepository {
 
     suspend fun getMessagesForChat(chatId:String,page:Int,pageSize:Int):List<Message>
 
-    suspend fun getChatForUser(userId:String):List<Chat>
+    suspend fun getChatForUser(userId:String):List<ChatResponse>
 
     suspend fun insertMessage(message: Message)
 

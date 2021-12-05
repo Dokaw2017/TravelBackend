@@ -1,7 +1,6 @@
 package com.example.route
 
-import com.example.data.models.Message
-import com.example.data.websocket.WsMessage
+import com.example.data.websocket.WsServerMessage
 import com.example.utils.Constants.DEFAULT_PAGE_SIZE
 import com.example.utils.QueryParams
 import com.example.service.chat.ChatController
@@ -20,7 +19,6 @@ import io.ktor.sessions.*
 import io.ktor.websocket.*
 import kotlinx.coroutines.channels.consumeEach
 import org.koin.java.KoinJavaComponent.inject
-import org.koin.ktor.ext.inject
 
 
 fun Route.getMessagesForChat(
@@ -53,6 +51,7 @@ fun Route.getChatsForUser(
         get("/api/chats") {
 
             val chats = chatService.getChatsForUser(call.userId)
+            println("helloooooooo $chats")
             call.respond(HttpStatusCode.OK, chats)
         }
     }
@@ -80,6 +79,7 @@ fun Route.chatWebSocket(
                             return@consumeEach
                         }
                         val type = frameText.substring(0, delimiterIndex).toIntOrNull() ?: return@consumeEach
+
                         val json = frameText.substring(delimiterIndex + 1, frameText.length)
 
                         handleWebSocket(this, session, chatController, type, json)
@@ -109,12 +109,10 @@ suspend fun handleWebSocket(
 
     when (type) {
         WebSocketObject.MESSAGE.ordinal -> {
-            val message = gson.fromJsonOrNull(json, WsMessage::class.java) ?: return
+            val message = gson.fromJsonOrNull(json, WsServerMessage::class.java) ?: return
             chatController.sendMessage(
                 json, message
             )
-
         }
     }
-
 }

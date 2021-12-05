@@ -2,8 +2,8 @@ package com.example.data.repository.chat
 
 import com.example.data.models.Chat
 import com.example.data.models.Message
-import com.example.data.models.SimpleUser
 import com.example.data.models.User
+import com.example.data.response.ChatResponse
 import org.litote.kmongo.*
 import org.litote.kmongo.coroutine.CoroutineDatabase
 
@@ -22,11 +22,26 @@ class ChatRepositoryImpl(
             .toList()
     }
 
-    override suspend fun getChatForUser(userId: String): List<Chat> {
-
+    override suspend fun getChatForUser(userId: String): List<ChatResponse> {
         return chats.find(Chat::userIds contains userId)
             .descendingSort(Chat::timestamp)
             .toList()
+            .map { chat ->
+                val otherUserId = chat.userIds.find { it != userId }
+                println("OWN USER ID: $userId")
+                println("OTHER USER ID: $otherUserId")
+                println("CHAT USER IDS: ${chat.userIds}")
+                val user = users.findOneById(otherUserId ?: "")
+                val message = messages.findOneById(chat.lastMessageId)
+                ChatResponse(
+                    chatId = chat.id,
+                    remoteUserId = user?.id,
+                    remoteUsername = user?.username,
+                    remoteUserProfileUrl = user?.profileImageUrl,
+                    lastMessage = message?.text,
+                    timestamp = message?.timestamp
+                )
+            }
     }
 
     override suspend fun doesChatBelongsToUser(chatId: String, userId: String): Boolean {
@@ -38,7 +53,6 @@ class ChatRepositoryImpl(
     }
 
     override suspend fun insertChat(userId1: String, userId2: String, messageId: String) {
-
         val chat = Chat(
             userIds = listOf(
                 userId1,
@@ -48,7 +62,7 @@ class ChatRepositoryImpl(
             timestamp = System.currentTimeMillis(),
         )
         val chatId = chats.insertOne(chat).insertedId?.asObjectId().toString()
-        messages.updateOneById(messageId, setValue(Message::chatId,chatId))
+        messages.updateOneById(messageId, setValue(Message::chatId, chatId))
 
     }
 
@@ -58,11 +72,10 @@ class ChatRepositoryImpl(
                 Chat::userIds contains userId1,
                 Chat::userIds contains userId2
             )
-        )
-            .first() != null
+        ).first() != null
     }
 
     override suspend fun updateLastMessageIdForChat(chatId: String, lastMessageId: String) {
-        chats.updateOneById(chatId, setValue(Chat::lastMessageId,lastMessageId))
+        chats.updateOneById(chatId, setValue(Chat::lastMessageId, lastMessageId))
     }
 }
