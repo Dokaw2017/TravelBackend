@@ -170,17 +170,17 @@ fun Route.updateProfile(
     val gson by inject<Gson>()
 
     authenticate {
-        post("/api/user/updatee") {
+        put("/api/user/updatee") {
 
             val request = call.receiveOrNull<UpdateProfileRequest>() ?: kotlin.run {
                 call.respond(HttpStatusCode.BadRequest)
-                return@post
+                return@put
             }
 
 
             if (request.username.isBlank() || request.bio.isBlank()) {
                 call.respond(ApiResponse<Unit>(false, ApiMessages.FIELD_BLANK))
-                return@post
+                return@put
             }
 
             userService.updateUser(call.userId, request)
