@@ -33,6 +33,9 @@ fun Route.getMessagesForChat(
             val page = call.parameters[QueryParams.PARAM_PAGE]?.toIntOrNull() ?: 0
             val pageSize = call.parameters[QueryParams.PARAM_PAGE_SIZE]?.toIntOrNull() ?: DEFAULT_PAGE_SIZE
 
+            println("OWN USER ID: ${call.userId}")
+            println("CHAT ID: ${chatId}")
+
             if (!chatService.doesTheChatBelongsToUser(chatId, call.userId)) {
                 call.respond(HttpStatusCode.Forbidden)
                 return@get
