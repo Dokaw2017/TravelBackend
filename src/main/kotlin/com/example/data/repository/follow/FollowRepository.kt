@@ -4,6 +4,8 @@ import com.example.data.models.Following
 
 interface FollowRepository {
 
+    //DTO for the follow collection
+
     suspend fun followUser(
         followingUserId:String,
         followedUserId:String

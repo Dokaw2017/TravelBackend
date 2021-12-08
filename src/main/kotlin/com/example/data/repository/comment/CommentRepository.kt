@@ -5,6 +5,8 @@ import com.example.data.response.CommentResponse
 
 interface CommentRepository {
 
+    //DTO for the comment collection
+
     suspend fun createComment(comment: Comment)
 
     suspend fun deleteComment(commentId:String):Boolean

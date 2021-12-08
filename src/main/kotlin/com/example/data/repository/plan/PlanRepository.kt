@@ -4,6 +4,8 @@ import com.example.data.models.Plan
 
 interface PlanRepository {
 
+    //DTO for the plan collection
+
     suspend fun createEvent(plan:Plan):Boolean
 
     suspend fun getEventById(eventId:String):Plan?

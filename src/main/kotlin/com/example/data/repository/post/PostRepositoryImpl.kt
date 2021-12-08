@@ -11,6 +11,9 @@ import org.litote.kmongo.setValue
 class PostRepositoryImpl(
     db: CoroutineDatabase
 ) : PostRepository {
+
+    //implementation for the post dto
+
     val posts = db.getCollection<Post>()
     private val users = db.getCollection<User>()
     private val likes = db.getCollection<Like>()

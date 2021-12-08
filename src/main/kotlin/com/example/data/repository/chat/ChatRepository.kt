@@ -5,6 +5,7 @@ import com.example.data.response.ChatResponse
 
 interface ChatRepository {
 
+    //DTO for the chat collection
     suspend fun doesChatBelongsToUser(chatId: String,userId: String):Boolean
 
     suspend fun getMessagesForChat(chatId:String,page:Int,pageSize:Int):List<Message>

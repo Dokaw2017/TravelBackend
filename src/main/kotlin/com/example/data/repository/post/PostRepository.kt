@@ -6,6 +6,8 @@ import com.example.data.response.PostResponsee
 
 interface PostRepository {
 
+    //DTO for the post collection
+
     suspend fun createPost(post:Post):Boolean
 
     suspend fun deletePost(postId:String)

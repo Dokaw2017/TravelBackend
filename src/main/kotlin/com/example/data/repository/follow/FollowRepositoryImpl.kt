@@ -9,6 +9,9 @@ import org.litote.kmongo.eq
 class FollowRepositoryImpl(
     db: CoroutineDatabase
 ): FollowRepository {
+
+    //implementation for the follow dto
+
     private val following = db.getCollection<Following>()
     private val users = db.getCollection<User>()
 

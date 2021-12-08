@@ -1,6 +1,6 @@
 package com.example.route
 
-import com.example.data.websocket.WsServerMessage
+import com.example.data.websocket.WsClientMessage
 import com.example.utils.Constants.DEFAULT_PAGE_SIZE
 import com.example.utils.QueryParams
 import com.example.service.chat.ChatController
@@ -63,58 +63,63 @@ fun Route.getChatsForUser(
 fun Route.chatWebSocket(
     chatController: ChatController
 ) {
-    webSocket("/api/chat/websocket") {
-        val session = call.sessions.get<ChatSession>()
-        if (session == null) {
-            close(CloseReason(CloseReason.Codes.VIOLATED_POLICY, "No sessions"))
-            return@webSocket
-        }
-
-        chatController.onJoin(session, this)
-
-        try {
-            incoming.consumeEach { frame ->
-                when (frame) {
-                    is Frame.Text -> {
-                        val frameText = frame.readText()
-                        val delimiterIndex = frameText.indexOf("#")
-                        if (delimiterIndex == -1) {
-                            return@consumeEach
-                        }
-                        val type = frameText.substring(0, delimiterIndex).toIntOrNull() ?: return@consumeEach
-
-                        val json = frameText.substring(delimiterIndex + 1, frameText.length)
-
-                        handleWebSocket(this, session, chatController, type, json)
-                    }
-                    else -> Unit
-                }
+    authenticate {
+        webSocket("/api/chat/websocket") {
+            println("Trying to connect")
+            val session = call.sessions.get<ChatSession>()
+            if (session == null) {
+                close(CloseReason(CloseReason.Codes.VIOLATED_POLICY, "No sessions"))
+                return@webSocket
             }
 
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            chatController.onDisconnect(session.userId)
-        }
+            chatController.onJoin(session, this)
+            println("Connected")
+            try {
+                incoming.consumeEach { frame ->
+                    when (frame) {
+                        is Frame.Text -> {
+                            val frameText = frame.readText()
+                            println("Frame recieved $frameText")
+                            val delimiterIndex = frameText.indexOf("#")
+                            if (delimiterIndex == -1) {
+                                return@consumeEach
+                            }
+                            val type = frameText.substring(0, delimiterIndex).toIntOrNull() ?: return@consumeEach
 
+                            val json = frameText.substring(delimiterIndex + 1, frameText.length)
+
+                            handleWebSocket(call.userId, chatController, type, frameText,json)
+                        }
+                        else -> Unit
+                    }
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            } finally {
+                chatController.onDisconnect(session.userId)
+            }
+
+        }
     }
+
 
 }
 
 suspend fun handleWebSocket(
-    webSocketSession: WebSocketSession,
-    session: ChatSession,
+   userId:String,
     chatController: ChatController,
     type: Int,
+   frameText:String,
     json: String
 ) {
     val gson by inject<Gson>(Gson::class.java)
 
     when (type) {
         WebSocketObject.MESSAGE.ordinal -> {
-            val message = gson.fromJsonOrNull(json, WsServerMessage::class.java) ?: return
+            val message = gson.fromJsonOrNull(json, WsClientMessage::class.java) ?: return
             chatController.sendMessage(
-                json, message
+                userId,frameText, message
             )
         }
     }

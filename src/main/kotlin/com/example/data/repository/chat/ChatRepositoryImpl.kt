@@ -10,6 +10,9 @@ import org.litote.kmongo.coroutine.CoroutineDatabase
 class ChatRepositoryImpl(
     db: CoroutineDatabase
 ) : ChatRepository {
+
+    //implementation for the chat dto
+
     private val chats = db.getCollection<Chat>()
     private val users = db.getCollection<User>()
     private val messages = db.getCollection<Message>()
@@ -18,7 +21,7 @@ class ChatRepositoryImpl(
         return messages.find(Message::chatId eq chatId)
             .skip(page * pageSize)
             .limit(pageSize)
-            .descendingSort(Message::timestamp)
+            .ascendingSort(Message::timestamp)
             .toList()
     }
 

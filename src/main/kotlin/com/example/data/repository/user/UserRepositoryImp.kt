@@ -11,6 +11,9 @@ import org.litote.kmongo.regex
 class UserRepositoryImp(
     db:CoroutineDatabase
 ): UserRepository {
+
+    //implementation for the user dto
+
     private val users = db.getCollection<User>()
     override suspend fun createUser(user: User) {
        users.insertOne(user)

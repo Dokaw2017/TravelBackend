@@ -1,8 +1,5 @@
 package com.example.di
 
-import com.example.data.models.Chat
-import com.example.data.models.Message
-import com.example.data.models.SimpleUser
 import com.example.utils.Constants.DATABASE_NAME
 import com.example.data.repository.chat.ChatRepository
 import com.example.data.repository.chat.ChatRepositoryImpl
@@ -22,13 +19,12 @@ import com.example.service.*
 import com.example.service.chat.ChatController
 import com.example.service.chat.ChatService
 import com.google.gson.Gson
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
 import org.litote.kmongo.coroutine.coroutine
 import org.litote.kmongo.reactivestreams.KMongo
 import org.koin.dsl.module
 
 val mainModule = module() {
+    // This is a koin module. It ensures the single access for the database and the components during the runtime.
     single {
         val client = KMongo.createClient(System.getenv("MONGO_URI") ?: "").coroutine
         client.getDatabase(DATABASE_NAME)

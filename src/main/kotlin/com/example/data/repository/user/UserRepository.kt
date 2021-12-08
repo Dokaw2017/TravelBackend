@@ -6,6 +6,8 @@ import com.example.data.response.ProfileResponse
 
 interface UserRepository {
 
+    //DTO for the user collection
+
     suspend fun createUser(user:User)
 
     suspend fun getUserById(userId:String):User?

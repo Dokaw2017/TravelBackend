@@ -9,6 +9,8 @@ class PlanRepositoryImpl(
     db: CoroutineDatabase
 ) : PlanRepository {
 
+    //implementation for the plan dto
+
     private val plans = db.getCollection<Plan>()
 
     override suspend fun createEvent(plan: Plan): Boolean {

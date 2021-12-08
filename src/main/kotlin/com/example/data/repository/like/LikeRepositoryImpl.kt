@@ -13,6 +13,9 @@ import org.litote.kmongo.setValue
 class LikeRepositoryImpl(
     db: CoroutineDatabase
 ):LikeRepository {
+
+    //implementation for the like dto
+
     private val likes = db.getCollection<Like>()
     private val users = db.getCollection<User>()
     private val comments = db.getCollection<Comment>()

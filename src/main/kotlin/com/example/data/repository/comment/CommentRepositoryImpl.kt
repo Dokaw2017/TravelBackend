@@ -12,6 +12,8 @@ class CommentRepositoryImpl(
     db: CoroutineDatabase
 ):CommentRepository {
 
+    //implementation for the comment dto
+
    private val comments = db.getCollection<Comment>()
     private  val likes = db.getCollection<Like>()
 
